@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <!-- ==========================================================
+       METADATOS BÁSICOS
+       ========================================================== -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Álvaro Ripoll Chaquet — Estudiante de DAM · Xàtiva</title>
+    <meta name="description"
+        content="Web personal de Álvaro Ripoll Chaquet, 1º de DAM en el Simarro (Xàtiva). Matemáticas, informática, deporte y negocios.">
+    <meta name="author" content="Álvaro Ripoll Chaquet">
+
+    <!-- Paleta básica antes de que cargue la hoja de estilos (evita flash) -->
+    <meta name="theme-color" content="#F6F3EC">
+
+    <!-- Tipografías: display (Fraunces) + texto (Public Sans) + datos (IBM Plex Mono) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"
+        rel="stylesheet">
+    <!-- Aplica el tema guardado antes de pintar (evita el flash claro/oscuro) -->
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('tema');
+                if (!t) {
+                    t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+            } catch (e) {
+                document.documentElement.setAttribute('data-theme', 'light');
+            }
+        })();
+    </script>
+    <!-- Hoja de estilos principal -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- ==========================================================
+       CAPAS AMBIENTALES (decorativas, no leíbles por lector de pantalla)
+       - .grid-paper : papel milimetrado de fondo
+       - .grain      : grano sutil de papel
+       - .scroll-progress : barra de progreso de lectura (la mueve script.js)
+       ========================================================== -->
+    <div class="grid-paper" aria-hidden="true"></div>
+    <div class="grain" aria-hidden="true"></div>
+    <div class="scroll-progress" aria-hidden="true"><span id="progress-bar"></span></div>
+    <!-- Partículas que siguen al cursor (canvas no bloquea clics) -->
+    <canvas id="cursor-particles" aria-hidden="true"></canvas>
+    <!-- Enlace de salto para accesibilidad -->
+    <a class="skip-link" href="#contenido">Saltar al contenido</a>
+    <header class="topbar" role="banner">
+        <a href="#portada" class="monograma" aria-label="Inicio — Álvaro Ripoll Chaquet">
+            <span class="monograma__mark">AR</span>
+            <span class="monograma__text">Álvaro Ripoll</span>
+        </a>
+
+        <nav class="topnav" id="menu" aria-label="Navegación principal">
+            <ul>
+                <li><a href="#sobre-mi" data-nav>Sobre mí</a></li>
+                <li><a href="#trayectoria" data-nav>Lo que he hecho</a></li>
+                <li><a href="#me-gusta" data-nav>Me gusta</a></li>
+                <li><a href="utilidades.html" data-nav>Utilidades</a></li>
+                <li><a href="#contacto" data-nav class="topnav__cta">Contacto</a></li>
+            </ul>
+        </nav>
+
+        <div class="topbar__cluster">
+            <p class="topbar__clock">
+                <span class="dot" aria-hidden="true"></span>Xàtiva · <time id="hora-local">--:--:--</time>
+            </p>
+
+            <!-- Botón claro/oscuro -->
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false"
+                aria-label="Cambiar a modo oscuro" title="Cambiar tema">
+                <svg class="theme-toggle__icon theme-toggle__icon--moon" viewBox="0 0 24 24" width="18" height="18"
+                    fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                    aria-hidden="true">
+                    <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
+                </svg>
+                <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" width="18" height="18"
+                    fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"
+                    aria-hidden="true">
+                    <circle cx="12" cy="12" r="4" />
+                    <path
+                        d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
+                </svg>
+            </button>
+
+            <!-- Botón hamburguesa (solo móvil) -->
+            <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="menu"
+                aria-label="Abrir menú">
+                <span class="nav-toggle__bar" aria-hidden="true"></span>
+                <span class="nav-toggle__bar" aria-hidden="true"></span>
+                <span class="nav-toggle__bar" aria-hidden="true"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ==========================================================
+       MAIN — CONTENIDO PRINCIPAL
+       ========================================================== -->
+    <main id="contenido">
+
+        <!-- ========================================================
+         1. PORTADA / CABECERA
+         Nombre + frase. Estructura tipo "ficha": titular a la izquierda,
+         tarjeta de datos a la derecha.
+         ======================================================== -->
+        <section id="portada" class="hero" aria-labelledby="nombre">
+            <div class="hero__inner">
+
+                <!-- Columna izquierda: titular -->
+                <div class="hero__lead">
+                    <p class="eyebrow" data-reveal>
+                        <span class="eyebrow__num">00</span>
+                        <span class="eyebrow__line" aria-hidden="true"></span>
+                        Ficha personal · Xàtiva, València
+                    </p>
+
+                    <h1 id="nombre" class="hero__title">
+                        <span class="line"><span class="line__mask">Álvaro</span></span>
+                        <span class="line"><span class="line__mask">Ripoll</span></span>
+                        <span class="line"><span class="line__mask line__mask--accent">Chaquet</span></span>
+                    </h1>
+
+                    <!-- Frase principal (la palabra que parpadea la rota script.js) -->
+                    <p class="hero__phrase" data-reveal data-reveal-delay="200">
+                        Números, código y <em
+                            data-rotate='["cabeza ordenada.","ganas de aprender.","un café en medio."]'>cabeza
+                            ordenada.</em>
+                    </p>
+
+                    <p class="hero__role" data-scramble="Estudiante de 1º de DAM · Xàtiva">
+                        Estudiante de 1º de DAM · Xàtiva
+                    </p>
+
+                    <!-- Contadores (los anima script.js con data-count) -->
+                    <dl class="hero__stats" data-reveal data-reveal-delay="350">
+                        <div class="stat">
+                            <dt>Años</dt>
+                            <dd><span data-count="19">19</span></dd>
+                        </div>
+                        <div class="stat">
+                            <dt>Idiomas</dt>
+                            <dd><span data-count="3">3</span></dd>
+                        </div>
+                        <div class="stat">
+                            <dt>Grados cursados</dt>
+                            <dd><span data-count="2">2</span></dd>
+                        </div>
+                        <div class="stat">
+                            <dt>Congresos</dt>
+                            <dd><span data-count="1">1</span></dd>
+                        </div>
+                    </dl>
+
+                    <div class="hero__actions" data-reveal data-reveal-delay="500">
+                        <a href="#sobre-mi" class="btn btn--solid">Quién soy <span aria-hidden="true">→</span></a>
+                        <a href="#contacto" class="btn btn--ghost">Escríbeme</a>
+                    </div>
+                </div>
+
+                <!-- Columna derecha: tarjeta de datos + foto -->
+                <aside class="hero__card" data-reveal data-reveal-delay="250" aria-label="Datos rápidos">
+                    <!-- Foto principal: Alvaro -->
+                    <figure class="hero__figure" data-tilt>
+                        <img src="img/alvaro.jpg"
+                            alt="Álvaro Ripoll Chaquet" class="kenburns"
+                            loading="eager" width="900" height="1100">
+                    </figure>
+
+                    <dl class="spec">
+                        <div class="spec__row">
+                            <dt>Nombre completo</dt>
+                            <dd>Álvaro Ripoll Chaquet</dd>
+                        </div>
+                        <div class="spec__row">
+                            <dt>Nacimiento</dt>
+                            <dd><time datetime="2007-08-16">16 / 08 / 2007</time></dd>
+                        </div>
+                        <div class="spec__row">
+                            <dt>Ciudad</dt>
+                            <dd>Xàtiva (València)</dd>
+                        </div>
+                        <div class="spec__row">
+                            <dt>Estudios</dt>
+                            <dd>1º DAM · el Simarro</dd>
+                        </div>
+                        <div class="spec__row">
+                            <dt>Correo</dt>
+                            <dd><a href="mailto:archaquet@gmail.com">archaquet@gmail.com</a></dd>
+                        </div>
+                        <div class="spec__row">
+                            <dt>Teléfono</dt>
+                            <dd><a href="tel:+34643892373">+34 643 89 23 73</a></dd>
+                        </div>
+                    </dl>
+                </aside>
+            </div>
+
+            <!-- Cinta de palabras clave (marquee infinito) -->
+            <div class="marquee" aria-hidden="true">
+                <div class="marquee__track">
+                    <span>Matemáticas</span><i>✦</i><span>Desarrollo multiplataforma</span><i>✦</i><span>Big
+                        Data</span><i>✦</i><span>Deporte</span><i>✦</i><span>Negocios</span><i>✦</i>
+                    <span>Matemáticas</span><i>✦</i><span>Desarrollo multiplataforma</span><i>✦</i><span>Big
+                        Data</span><i>✦</i><span>Deporte</span><i>✦</i><span>Negocios</span><i>✦</i>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+         2. SOBRE MÍ
+         Patrón de dos columnas: la izquierda queda fija (sticky)
+         mientras el texto acompaña al hacer scroll.
+         ======================================================== -->
+        <section id="sobre-mi" class="about" aria-labelledby="about-title">
+            <div class="about__grid">
+
+                <!-- Columna fija -->
+                <div class="about__sticky">
+                    <p class="eyebrow" data-reveal>
+                        <span class="eyebrow__num">01</span>
+                        <span class="eyebrow__line" aria-hidden="true"></span>
+                        Sobre mí
+                    </p>
+                    <h2 id="about-title" class="section-title" data-reveal>
+                        De la marisma<br>de datos<br>a <em>algo útil</em>.
+                    </h2>
+                    <p class="about__note" data-reveal data-reveal-delay="150">
+                        Diecinueve años, una calculadora en la mochila y la costumbre de apuntar todo.
+                    </p>
+                </div>
+
+                <!-- Columna de texto -->
+                <div class="about__body">
+                    <p class="lead" data-reveal>
+                        Me llamo <strong>Álvaro Ripoll Chaquet</strong>. Nací en Xàtiva, vivo en Xàtiva
+                        y estudio <strong>1º de DAM</strong> —Desarrollo de Aplicaciones Multiplataforma—
+                        en el Simarro.
+                    </p>
+
+                    <p data-reveal data-reveal-delay="100">
+                        Vengo del <strong>grado medio de SMX</strong>, donde aprendí la parte que casi nadie
+                        ve cuando todo funciona: máquinas, sistemas, redes y lo importante que es que
+                        las cosas estén bien montadas por dentro. Ese gusto por el orden es el que ahora
+                        aplico al código.
+                    </p>
+
+                    <blockquote class="pull" data-reveal data-reveal-delay="150">
+                        <p>«Una cuenta bien hecha no se discute; un argumento bien ordenado, tampoco.»</p>
+                        <cite>Lo que me repito antes de cada examen</cite>
+                    </blockquote>
+
+                    <p data-reveal>
+                        Fuera del aula he buscado todo lo que se mueve alrededor de la tecnología:
+                        acudí al <strong>congreso europeo FACTS en 2024</strong> y completé un
+                        <strong>curso de gestión empresarial sobre marketing, IA y startups en EDEM</strong>,
+                        en València. Dos mundos que parecen lejos de un ciclo de informática y que, sin
+                        embargo, me han servido para entender para qué se programa.
+                    </p>
+
+                    <!-- Mini-perfil en lista, no en tarjetas repetidas -->
+   <!--                <dl class="facts" data-reveal data-reveal-delay="100">
+                        <div class="facts__item">
+                            <dt>Idiomas</dt>
+                            <dd>Castellano y valenciano nativos · Inglés <span class="badge">B2</span></dd>
+                        </div>
+                        <div class="facts__item">
+                            <dt>Base</dt>
+                            <dd>Grado medio SMX</dd>
+                        </div>
+                        <div class="facts__item">
+                            <dt>Actualmente</dt>
+                            <dd>1º de DAM, el Simarro · Xàtiva</dd>
+                        </div>
+                        <div class="facts__item">
+                            <dt>Siguiente paso</dt>
+                            <dd>Formación en Big Data y análisis de datos</dd>
+                        </div>
+                    </dl>-->
+                </div>
+            </div>
+        </section>
+
+        <!-- ========================================================
+         3. LO QUE HE HECHO
+         Línea de tiempo vertical + bloque de idiomas.
+         ======================================================== -->
+        <section id="trayectoria" class="timeline-section" aria-labelledby="tl-title">
+            <header class="section-head">
+                <p class="eyebrow" data-reveal>
+                    <span class="eyebrow__num">02</span>
+                    <span class="eyebrow__line" aria-hidden="true"></span>
+                    Lo que he hecho
+                </p>
+                <h2 id="tl-title" class="section-title section-title--wide" data-reveal>
+                    Una trayectoria corta, pero <em>con intención</em>.
+                </h2>
+            </header>
+
+            <!-- Línea de tiempo -->
+            <ol class="timeline">
+                <li class="tl-item" data-reveal>
+                    <p class="tl-item__year"><time datetime="2023">2023</time></p>
+                    <div class="tl-item__body">
+                        <h3>Grado medio en SMX</h3>
+                        <p>Primer contacto serio con sistemas, redes y montaje de equipos. Aprendí a
+                            desmontar un problema antes de tocarlo.</p>
+                        <ul class="tags" aria-label="Competencias">
+                            <li>Sistemas</li>
+                            <li>Redes</li>
+                            <li>Mantenimiento</li>
+                        </ul>
+                    </div>
+                    <span class="tl-item__dot" aria-hidden="true"></span>
+                </li>
+
+                <li class="tl-item" data-reveal>
+                    <p class="tl-item__year"><time datetime="2024">2024</time></p>
+                    <div class="tl-item__body">
+                        <h3>Congreso europeo FACTS</h3>
+                        <p>Una experiencia fuera de la rutina: ponencias, talleres y conversación con
+                            gente de otros países que también estaba decidiendo qué hacer con su vida.</p>
+                        <ul class="tags" aria-label="Competencias">
+                            <li>Congreso</li>
+                            <li>Inglés</li>
+                            <li>Networking</li>
+                        </ul>
+                    </div>
+                    <span class="tl-item__dot" aria-hidden="true"></span>
+                </li>
+
+                <li class="tl-item" data-reveal>
+                    <p class="tl-item__year"><time datetime="2024">2024</time></p>
+                    <div class="tl-item__body">
+                        <h3>Curso de gestión empresarial · EDEM, València</h3>
+                        <p>Marketing, inteligencia artificial y startups. Entendí que una idea sin
+                            modelo de negocio es solo una idea, y que la IA ya es una herramienta más
+                            del escritorio.</p>
+                        <ul class="tags" aria-label="Competencias">
+                            <li>Marketing</li>
+                            <li>IA aplicada</li>
+                            <li>Startups</li>
+                        </ul>
+                    </div>
+                    <span class="tl-item__dot" aria-hidden="true"></span>
+                </li>
+
+                <li class="tl-item tl-item--now" data-reveal>
+                    <p class="tl-item__year"><time datetime="2025">2025</time> <span class="pill">ahora</span></p>
+                    <div class="tl-item__body">
+                        <h3>1º de DAM · el Simarro, Xàtiva</h3>
+                        <p>Programación, bases de datos y desarrollo de aplicaciones. Es donde estoy
+                            construyendo el oficio, con la vista puesta en el dato.</p>
+                        <ul class="tags" aria-label="Competencias">
+                            <li>Java</li>
+                            <li>SQL</li>
+                            <li>Python</li>
+                            <li>Git</li>
+                        </ul>
+                    </div>
+                    <span class="tl-item__dot tl-item__dot--live" aria-hidden="true"></span>
+                </li>
+            </ol>
+
+            <!-- Idiomas: barras de nivel -->
+            <div class="langs" data-reveal>
+                <h3 class="langs__title">Idiomas</h3>
+                <ul class="langs__list">
+                    <li class="lang">
+                        <span class="lang__name">Castellano</span>
+                        <span class="lang__level">Nativo</span>
+                        <span class="bar"><span class="bar__fill" style="--nivel: 100%"></span></span>
+                    </li>
+                    <li class="lang">
+                        <span class="lang__name">Valenciano</span>
+                        <span class="lang__level">Nativo</span>
+                        <span class="bar"><span class="bar__fill" style="--nivel: 100%"></span></span>
+                    </li>
+                    <li class="lang">
+                        <span class="lang__name">Inglés</span>
+                        <span class="lang__level">B2</span>
+                        <span class="bar"><span class="bar__fill" style="--nivel: 70%"></span></span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Lo que viene después -->
+            <aside class="next" data-reveal>
+                <p class="next__label">Próximo paso</p>
+                <h3 class="next__title">Un curso de <em>Big Data</em> y seguir tirando del hilo.</h3>
+                <p class="next__text">
+                    Quiero unir las dos cosas que más me interesan —matemáticas e informática— en un
+                    perfil de análisis de datos. Ese es el plan a medio plazo.
+                </p>
+                <a class="btn btn--ghost" href="#contacto">Hablemos de datos</a>
+            </aside>
+        </section>
+        <!-- ========================================================
+     4. ME GUSTA
+     Orden: Informática · Deporte · Matemáticas · Negocios
+     Mosaico tipo bento: cada afición tiene su propio tamaño.
+     ======================================================== -->
+        <section id="me-gusta" class="likes" aria-labelledby="likes-title">
+            <header class="section-head">
+                <p class="eyebrow" data-reveal>
+                    <span class="eyebrow__num">03</span>
+                    <span class="eyebrow__line" aria-hidden="true"></span>
+                    Me gusta
+                </p>
+                <h2 id="likes-title" class="section-title section-title--wide" data-reveal>
+                    Cuatro cosas a las que siempre vuelvo.
+                </h2>
+            </header>
+
+            <div class="mosaic">
+
+                <!-- Informática — consola -->
+                <article class="tile tile--code" data-reveal>
+                    <div class="tile__content">
+                        <span class="tile__num">01</span>
+                        <h3>Informática</h3>
+                        <p>Programar me engancha por lo inmediato: escribes, falla, lo arreglas, funciona.</p>
+                        <pre class="console" aria-label="Fragmento de consola"><code>&gt; alumno.nombre
+"Álvaro Ripoll Chaquet"
+&gt; alumno.curso
+"1º DAM — el Simarro"
+&gt; alumno.siguiente
+"Big Data"</code></pre>
+                    </div>
+                </article>
+
+                <!-- Deporte — foto arriba, título y descripción debajo (igual que Matemáticas) -->
+                <article class="tile tile--sport" data-reveal data-reveal-delay="100">
+                    <figure class="tile__media">
+                        <img class="kenburns" src="img/deporte.jpg"
+                            onerror="this.onerror=null;this.src='https://loremflickr.com/1200/800/sport,training/all'"
+                            alt="Entrenamiento de deporte al aire libre" loading="lazy" width="1200" height="800">
+                    </figure>
+                    <div class="tile__content">
+                        <span class="tile__num">02</span>
+                        <h3>Deporte</h3>
+                        <p>La disciplina del entreno se parece mucho a la del estudio: poco, pero todos los días.</p>
+                    </div>
+                </article>
+
+                <!-- Matemáticas — foto real de ecuaciones/pizarra (img/matematicas.jpg) -->
+                <article class="tile tile--math" data-reveal data-reveal-delay="150">
+                    <figure class="tile__media">
+                        <img src="img/matematicas.jpg"
+                            onerror="this.onerror=null;this.src='https://picsum.photos/seed/math-equations-chalkboard/1200/800'"
+                            alt="Cuaderno con ecuaciones y gráficas" loading="lazy" width="1200" height="800">
+                    </figure>
+                    <div class="tile__content">
+                        <span class="tile__num">03</span>
+                        <h3>Matemáticas</h3>
+                        <p>Me gusta el momento en que un problema enredo se convierte en tres líneas limpias. Son la
+                            parte de mi cabeza que no descansa.</p>
+                        <p class="tile__formula" aria-hidden="true">f(x) = orden + constancia</p>
+                    </div>
+                </article>
+
+                <!-- Negocios — cita y lista -->
+                <article class="tile tile--biz" data-reveal data-reveal-delay="200">
+                    <div class="tile__content">
+                        <span class="tile__num">04</span>
+                        <h3>Negocios</h3>
+                        <blockquote>
+                            <p>«Un buen número no miente; lo que hay que aprender es a preguntarle bien.»</p>
+                        </blockquote>
+                        <ul class="chips">
+                            <li>Marketing</li>
+                            <li>IA aplicada</li>
+                            <li>Startups</li>
+                            <li>Finanzas básicas</li>
+                        </ul>
+                    </div>
+                </article>
+            </div>
+
+            <!-- Fila de intereses sueltos -->
+            <p class="likes__also" data-reveal>
+                <span class="likes__also-label">Y también</span>
+                <span class="chip chip--plain">Xàtiva</span>
+                <span class="chip chip--plain">Congresos y jornadas</span>
+                <span class="chip chip--plain">Aprender haciendo</span>
+                <span class="chip chip--plain">Proyectos propios</span>
+            </p>
+        </section>
+
+    </main>
+
+    <!-- ==========================================================
+       5. PIE DE PÁGINA CON CONTACTO
+       ========================================================== -->
+    <footer id="contacto" class="footer" aria-labelledby="footer-title">
+        <div class="footer__grid">
+
+            <div class="footer__intro">
+                <p class="eyebrow eyebrow--light" data-reveal>
+                    <span class="eyebrow__num">04</span>
+                    <span class="eyebrow__line" aria-hidden="true"></span>
+                    Contacto
+                </p>
+                <h2 id="footer-title" class="footer__title" data-reveal>
+                    ¿Hablamos?
+                </h2>
+                <p class="footer__text" data-reveal data-reveal-delay="100">
+                    Si quieres proponerme algo, corregirme una idea o simplemente saludar,
+                    escríbeme. Respondo rápido.
+                </p>
+            </div>
+
+            <!-- Datos de contacto como address semántico -->
+            <address class="footer__contacto" data-reveal>
+                <ul>
+                    <li>
+                        <span class="footer__key">Correo</span>
+                        <a href="mailto:archaquet@gmail.com">archaquet@gmail.com</a>
+                    </li>
+                    <li>
+                        <span class="footer__key">Teléfono</span>
+                        <a href="tel:+34643892373">+34 643 89 23 73</a>
+                    </li>
+                    <li>
+                        <span class="footer__key">Ubicación</span>
+                        <span>Xàtiva · València · España</span>
+                    </li>
+                    <li>
+                        <span class="footer__key">Nacimiento</span>
+                        <span><time datetime="2007-08-16">16 de agosto de 2007</time></span>
+                    </li>
+                </ul>
+            </address>
+        </div>
+
+        <!-- Cierre: copia y detalle de la página -->
+        <div class="footer__bottom">
+            <p>© <span id="anio">2025</span> Álvaro Ripoll Chaquet</p>
+            <p class="footer__meta">Hecho a mano con HTML, CSS y JavaScript · <a href="#portada">Volver arriba ↑</a></p>
+        </div>
+    </footer>
+
+    <!-- Script principal (animaciones, reloj, reveals) -->
+    <script src="script.js" defer></script>
+</body>
+
+</html>
