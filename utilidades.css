@@ -652,3 +652,32 @@ mark {
     width: 100%;
   }
 }
+/* ============ SCRATCH DIDACTICO ============ */
+.sg-bar{ display:flex; flex-wrap:wrap; gap:.6rem; align-items:center; margin-bottom:1rem; }
+.sg-layout{ display:grid; grid-template-columns:190px 1fr 1fr; gap:1rem; align-items:start; }
+@media (max-width:900px){ .sg-layout{ grid-template-columns:1fr; } }
+
+.sg-palette{ display:flex; flex-direction:column; gap:1rem; }
+.sg-pgroup h4{ font-family:var(--font-mono); font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-faint); margin:0 0 .5rem; }
+.sg-pblock{ display:block; width:100%; text-align:left; border:none; cursor:pointer; color:#fff; font-weight:600; font-size:.82rem; padding:.55rem .7rem; border-radius:10px; margin-bottom:.4rem; box-shadow:var(--shadow-sm); }
+.sg-c-mov{ background:#2B4C7E; } .sg-c-pen{ background:#2f7d5b; } .sg-c-ctl{ background:#B9502F; } .sg-c-var{ background:#8a5cf0; }
+
+.sg-script{ background:var(--paper-2); border:1px solid var(--line); border-radius:12px; padding:.8rem; min-height:200px; }
+ul.sg-drop{ list-style:none; margin:0; padding:0; }
+.sg-root{ min-height:120px; }
+.sg-block{ display:flex; flex-wrap:wrap; align-items:center; gap:.4rem; color:#fff; font-size:.82rem; font-weight:600; padding:.5rem .7rem; border-radius:8px; margin-bottom:.4rem; box-shadow:var(--shadow-sm); }
+.sg-block .sg-label{ display:inline-flex; gap:.4rem; align-items:center; flex-wrap:wrap; }
+.sg-block .sg-acts{ margin-left:auto; display:inline-flex; gap:.2rem; }
+.sg-block .sg-acts button{ border:none; background:rgba(255,255,255,.22); color:#fff; width:24px; height:24px; border-radius:6px; cursor:pointer; font-size:.8rem; line-height:1; }
+.sg-block .sg-acts button:hover{ background:rgba(255,255,255,.4); }
+.sg-block input, .sg-block select{ font:inherit; font-family:var(--font-mono); font-size:.8rem; border:none; border-radius:6px; padding:.1rem .3rem; color:var(--ink); }
+.sg-block input[type=number]{ width:4rem; }
+.sg-block .sg-var{ width:3.5rem; }
+.sg-ctl{ display:block; }
+.sg-ctl > .sg-label{ width:100%; }
+.sg-ctl .sg-drop{ margin-top:.4rem; padding:.5rem; background:rgba(0,0,0,.12); border-radius:8px; min-height:38px; }
+.sg-drop.drag-over{ outline:2px dashed #fff; outline-offset:-3px; }
+
+.sg-right{ display:flex; flex-direction:column; gap:.8rem; }
+#sg-canvas{ border:1px solid var(--line); border-radius:12px; background:#fff; max-width:100%; }
+[data-theme="dark"] #sg-canvas{ background:#101010; }

@@ -68,6 +68,7 @@
         <a class="u-card" href="#u-orden" data-reveal><span class="u-card__icon">📊</span><span class="u-card__tag tag--visual">Visual</span><span class="u-card__title">Ordenación</span><span class="u-card__desc">Ves los algoritmos moverse en directo.</span><span class="u-card__go" aria-hidden="true">→</span></a>
         <a class="u-card" href="#u-montecarlo" data-reveal><span class="u-card__icon">🎲</span><span class="u-card__tag tag--math">Matemáticas</span><span class="u-card__title">Monte Carlo π</span><span class="u-card__desc">Aproxima π lanzando puntos al azar.</span><span class="u-card__go" aria-hidden="true">→</span></a>
         <a class="u-card" href="#u-rle" data-reveal><span class="u-card__icon">🧩</span><span class="u-card__tag tag--math">Matemáticas</span><span class="u-card__title">Compresor RLE</span><span class="u-card__desc">Comprime y descomprime texto, con ratio.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-scratch" data-reveal><span class="u-card__icon">SCR</span><span class="u-card__tag tag--visual">Visual</span><span class="u-card__title">Scratch: Python / Java / C++</span><span class="u-card__desc">Aprende bucles, condicionales y variables con bloques.</span><span class="u-card__go" aria-hidden="true">-&gt;</span></a>
       </div>
     </section>
 
@@ -183,6 +184,50 @@
       <div class="u-bar"><button class="btn btn--solid" id="rleEnc" type="button">Comprimir</button><button class="btn btn--ghost" id="rleDec" type="button">Descomprimir</button><p class="u-status" id="rleStatus" role="status">Sin texto.</p></div>
       <pre id="rleOut" class="u-pre u-pre--wrap" aria-live="polite"></pre>
     </div></section>
+   <!-- ===== SCRATCH DIDACTICO ===== -->
+<section class="u-tool" id="u-scratch" aria-labelledby="sg-title"><div class="u-tool__inner">
+  <h2 id="sg-title" class="section-title"><em>SCR</em> Scratch para aprender Python, Java y C++</h2>
+  <p class="u-sub">Pulsa o arrastra bloques a la pila, pulsa Ejecutar y mira la tortuga. El codigo de la derecha es la misma logica en el idioma que elijas.</p>
+
+  <div class="sg-bar">
+    <button class="btn btn--solid" id="sg-run" type="button">Ejecutar</button>
+    <button class="btn btn--ghost" id="sg-stop" type="button">Parar</button>
+    <button class="btn btn--ghost" id="sg-clear" type="button">Vaciar</button>
+    <button class="btn btn--ghost" id="sg-ex" type="button">Ejemplo cuadrado</button>
+    <label class="u-sel"><select id="sg-lang" aria-label="Lenguaje"><option value="py">Python</option><option value="java">Java</option><option value="cpp">C++</option></select></label>
+    <label class="u-len">Velocidad <input type="range" id="sg-speed" min="1" max="60" value="25"></label>
+    <span class="u-status" id="sg-status" role="status">Listo.</span>
+  </div>
+
+  <div class="sg-layout">
+    <div class="sg-palette" aria-label="Bloques">
+      <div class="sg-pgroup"><h4>Movimiento</h4>
+        <button class="sg-pblock sg-c-mov" draggable="true" data-type="mover">Mover pasos</button>
+        <button class="sg-pblock sg-c-mov" draggable="true" data-type="girar">Girar grados</button>
+        <button class="sg-pblock sg-c-pen" draggable="true" data-type="penDown">Bajar lapiz</button>
+        <button class="sg-pblock sg-c-pen" draggable="true" data-type="penUp">Subir lapiz</button>
+        <button class="sg-pblock sg-c-pen" draggable="true" data-type="color">Color</button>
+        <button class="sg-pblock sg-c-pen" draggable="true" data-type="limpiar">Limpiar</button>
+      </div>
+      <div class="sg-pgroup"><h4>Control</h4>
+        <button class="sg-pblock sg-c-ctl" draggable="true" data-type="repeat">Repetir veces</button>
+        <button class="sg-pblock sg-c-ctl" draggable="true" data-type="forever">Por siempre</button>
+        <button class="sg-pblock sg-c-ctl" draggable="true" data-type="if">Si</button>
+      </div>
+      <div class="sg-pgroup"><h4>Variables</h4>
+        <button class="sg-pblock sg-c-var" draggable="true" data-type="setVar">Asignar</button>
+        <button class="sg-pblock sg-c-var" draggable="true" data-type="changeVar">Cambiar</button>
+      </div>
+    </div>
+
+    <div class="sg-script"><ul id="sg-script-ul" class="sg-drop sg-root"></ul></div>
+
+    <div class="sg-right">
+      <canvas id="sg-canvas" width="440" height="300" aria-label="Lienzo de la tortuga"></canvas>
+      <pre id="sg-code" class="u-pre u-pre--wrap" aria-live="polite"></pre>
+    </div>
+  </div>
+</div></section>
   </main>
 
   <footer id="contacto" class="footer" aria-labelledby="footer-title">
@@ -191,5 +236,6 @@
   </footer>
 
   <script src="utilidades.js" defer></script>
+  <script src="utilidades-scratch.js" defer></script>
 </body>
 </html>
