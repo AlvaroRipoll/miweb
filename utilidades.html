@@ -4,46 +4,26 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Utilidades — Álvaro Ripoll Chaquet</title>
-  <meta name="description" content="Utilidades de Álvaro Ripoll Chaquet. Recorta el fondo de una foto con IA, directamente en tu navegador.">
+  <meta name="description" content="Utilidades de Álvaro Ripoll Chaquet: recortar fondo con IA, regex, minificador, conversores, visualizador de ordenación y más.">
   <meta name="author" content="Álvaro Ripoll Chaquet">
   <meta name="theme-color" content="#F6F3EC">
-
-  <!-- Aplica el tema guardado antes de pintar (evita el flash claro/oscuro) -->
   <script>
-    (function () {
-      try {
-        var t = localStorage.getItem('tema');
-        if (!t) t = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-        document.documentElement.setAttribute('data-theme', t);
-      } catch (e) { document.documentElement.setAttribute('data-theme', 'light'); }
-    })();
+    (function(){try{var t=localStorage.getItem('tema');if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','light');}})();
   </script>
-
-  <!-- Tipografías (mismas que el index) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">        <!-- sistema de diseño compartido -->
-  <link rel="stylesheet" href="utilidades.css">   <!-- estilos solo de esta página -->
-  <link rel="stylesheet" href="chatbot.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="utilidades.css">
 </head>
-
 <body>
   <div class="grid-paper" aria-hidden="true"></div>
   <div class="grain" aria-hidden="true"></div>
   <div class="scroll-progress" aria-hidden="true"><span id="progress-bar"></span></div>
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
-  <!-- ==========================================================
-       BARRA SUPERIOR (igual que el index; los enlaces vuelven a secciones del index)
-       ========================================================== -->
   <header class="topbar" role="banner">
-    <a href="index.html" class="monograma" aria-label="Inicio — Álvaro Ripoll Chaquet">
-      <span class="monograma__mark">AR</span>
-      <span class="monograma__text">Álvaro Ripoll</span>
-    </a>
-
+    <a href="index.html" class="monograma" aria-label="Inicio — Álvaro Ripoll Chaquet"><span class="monograma__mark">AR</span><span class="monograma__text">Álvaro Ripoll</span></a>
     <nav class="topnav" id="menu" aria-label="Navegación principal">
       <ul>
         <li><a href="index.html#sobre-mi">Sobre mí</a></li>
@@ -53,7 +33,6 @@
         <li><a href="index.html#contacto" class="topnav__cta">Contacto</a></li>
       </ul>
     </nav>
-
     <div class="topbar__cluster">
       <p class="topbar__clock"><span class="dot" aria-hidden="true"></span>Xàtiva · <time id="hora-local">--:--:--</time></p>
       <button class="theme-toggle" id="theme-toggle" type="button" aria-pressed="false" aria-label="Cambiar a modo oscuro" title="Cambiar tema">
@@ -61,9 +40,7 @@
         <svg class="theme-toggle__icon theme-toggle__icon--sun" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
       </button>
       <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="menu" aria-label="Abrir menú">
-        <span class="nav-toggle__bar" aria-hidden="true"></span>
-        <span class="nav-toggle__bar" aria-hidden="true"></span>
-        <span class="nav-toggle__bar" aria-hidden="true"></span>
+        <span class="nav-toggle__bar" aria-hidden="true"></span><span class="nav-toggle__bar" aria-hidden="true"></span><span class="nav-toggle__bar" aria-hidden="true"></span>
       </button>
     </div>
   </header>
@@ -71,76 +48,148 @@
   <main id="contenido">
     <section class="u-hero" aria-labelledby="u-title">
       <p class="eyebrow" data-reveal><span class="eyebrow__num">01</span><span class="eyebrow__line" aria-hidden="true"></span> Utilidades</p>
-      <h1 id="u-title" class="section-title" data-reveal>Recorta el fondo de una foto <em>con IA</em>, en tu navegador.</h1>
-      <p class="u-sub" data-reveal data-reveal-delay="120">Sube una imagen y el modelo segmenta el sujeto y elimina el fondo. <strong>Todo se procesa en tu equipo: la foto no se sube a ningún servidor.</strong> La primera vez tarda unos segundos (descarga el modelo, ~80&nbsp;MB); después funciona en caché.</p>
+      <h1 id="u-title" class="section-title" data-reveal>Herramientas <em>hechas a mano</em> para clase y para el día a día.</h1>
+      <p class="u-sub" data-reveal data-reveal-delay="120">Todo corre en tu navegador: sin servidor, sin claves y sin enviar tus datos. Elige una herramienta abajo y prueba.</p>
     </section>
 
-    <!-- ========================================================
-         UTILIDAD · Quitar fondo
-         ======================================================== -->
-    <section class="u-tool" aria-labelledby="cut-title">
-      <div class="u-tool__inner">
-
-        <!-- Zona de carga -->
-        <div class="u-drop" id="drop" tabindex="0" role="button" aria-label="Zona para arrastrar una imagen o pulsar para elegir archivo">
-          <input type="file" id="file" accept="image/*" hidden>
-          <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>
-          <p class="u-drop__title">Arrastra una imagen o <span>haz clic para elegirla</span></p>
-          <p class="u-drop__hint">JPG, PNG o WebP · máx. 20&nbsp;MB</p>
-        </div>
-
-        <!-- Barra de acciones + estado -->
-        <div class="u-bar">
-          <button class="btn btn--solid" id="run" type="button" disabled>Quitar fondo</button>
-          <button class="btn btn--ghost" id="clear" type="button" disabled>Limpiar</button>
-          <p class="u-status" id="status" role="status" aria-live="polite">Sin imagen. Elige una para empezar.</p>
-        </div>
-
-        <!-- Comparativa antes/después -->
-        <div class="u-grid" id="grid" hidden>
-          <figure class="u-panel">
-            <figcaption>Original</figcaption>
-            <div class="u-frame"><img id="imgIn" alt="Imagen original"></div>
-          </figure>
-          <figure class="u-panel">
-            <figcaption>Recortada <span class="u-check-tag" aria-hidden="true">▦ fondo transparente</span></figcaption>
-            <div class="u-frame u-check"><img id="imgOut" alt="Imagen con el fondo eliminado"></div>
-          </figure>
-        </div>
-
-        <!-- Descargas -->
-        <div class="u-dl" id="dl" hidden>
-          <a class="btn btn--solid" id="dlPng" download="recorte.png">Descargar PNG (transparente)</a>
-          <a class="btn btn--ghost" id="dlJpg" download="recorte.jpg">Descargar JPG (fondo blanco)</a>
-        </div>
-
-        <p class="u-note">Funciona con modelos de segmentación abiertos que corren sobre WebAssembly en el navegador. Los resultados dependen de la foto: funciona muy bien con sujetos claros y fondos simples.</p>
+    <!-- ===== MENÚ DE UTILIDADES (lista visual) ===== -->
+    <section class="u-index" aria-label="Lista de utilidades">
+      <div class="u-index__grid">
+        <a class="u-card" href="#u-recortar" data-reveal><span class="u-card__icon">✂️</span><span class="u-card__tag tag--ia">IA</span><span class="u-card__title">Quitar fondo</span><span class="u-card__desc">Recorta el fondo de una foto con IA en el navegador.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-json" data-reveal><span class="u-card__icon">{ }</span><span class="u-card__tag tag--code">Código</span><span class="u-card__title">Formateador JSON</span><span class="u-card__desc">Valida y da formato a JSON al instante.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-base64" data-reveal><span class="u-card__icon">⇄</span><span class="u-card__tag tag--code">Código</span><span class="u-card__title">Base64</span><span class="u-card__desc">Codifica y decodifica texto en Base64.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-hash" data-reveal><span class="u-card__icon">#</span><span class="u-card__tag tag--code">Código</span><span class="u-card__title">Hash</span><span class="u-card__desc">SHA-1/256/512 de cualquier texto.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-color" data-reveal><span class="u-card__icon">🎨</span><span class="u-card__tag tag--front">Front</span><span class="u-card__title">Conversor de color</span><span class="u-card__desc">HEX ↔ RGB ↔ HSL con paleta.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-uuid" data-reveal><span class="u-card__icon">🔑</span><span class="u-card__tag tag--code">Código</span><span class="u-card__title">UUID & contraseñas</span><span class="u-card__desc">Genera identificadores y claves seguras.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-regex" data-reveal><span class="u-card__icon">.*</span><span class="u-card__tag tag--code">Código</span><span class="u-card__title">Validador regex</span><span class="u-card__desc">Prueba expresiones y ve coincidencias.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-min" data-reveal><span class="u-card__icon">🗜️</span><span class="u-card__tag tag--code">Código</span><span class="u-card__title">Minificador</span><span class="u-card__desc">Comprime CSS/JS quitando lo que sobra.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-bases" data-reveal><span class="u-card__icon">01</span><span class="u-card__tag tag--math">Matemáticas</span><span class="u-card__title">Conversor de bases</span><span class="u-card__desc">Bin, oct, dec, hex con pasos.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-unidades" data-reveal><span class="u-card__icon">📏</span><span class="u-card__tag tag--net">Redes</span><span class="u-card__title">Conversor de unidades</span><span class="u-card__desc">Bytes, longitud, masa, tiempo, temperatura.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-orden" data-reveal><span class="u-card__icon">📊</span><span class="u-card__tag tag--visual">Visual</span><span class="u-card__title">Ordenación</span><span class="u-card__desc">Ves los algoritmos moverse en directo.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-montecarlo" data-reveal><span class="u-card__icon">🎲</span><span class="u-card__tag tag--math">Matemáticas</span><span class="u-card__title">Monte Carlo π</span><span class="u-card__desc">Aproxima π lanzando puntos al azar.</span><span class="u-card__go" aria-hidden="true">→</span></a>
+        <a class="u-card" href="#u-rle" data-reveal><span class="u-card__icon">🧩</span><span class="u-card__tag tag--math">Matemáticas</span><span class="u-card__title">Compresor RLE</span><span class="u-card__desc">Comprime y descomprime texto, con ratio.</span><span class="u-card__go" aria-hidden="true">→</span></a>
       </div>
     </section>
+
+    <!-- ===== 1 · QUITAR FONDO ===== -->
+    <section class="u-tool" id="u-recortar" aria-labelledby="cut-title"><div class="u-tool__inner">
+      <h2 id="cut-title" class="section-title"><em>✂️</em> Quitar fondo con IA</h2>
+      <div class="u-drop" id="drop" tabindex="0" role="button" aria-label="Arrastra una imagen o pulsa para elegir">
+        <input type="file" id="file" accept="image/*" hidden>
+        <svg viewBox="0 0 24 24" width="34" height="34" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V4M7 9l5-5 5 5M4 20h16"/></svg>
+        <p class="u-drop__title">Arrastra una imagen o <span>haz clic para elegirla</span></p>
+        <p class="u-drop__hint">JPG, PNG o WebP · máx. 20 MB</p>
+      </div>
+      <div class="u-bar"><button class="btn btn--solid" id="run" type="button" disabled>Quitar fondo</button><button class="btn btn--ghost" id="clear" type="button" disabled>Limpiar</button><p class="u-status" id="status" role="status" aria-live="polite">Sin imagen. Elige una para empezar.</p></div>
+      <div class="u-grid" id="grid" hidden><figure class="u-panel"><figcaption>Original</figcaption><div class="u-frame"><img id="imgIn" alt="Imagen original"></div></figure><figure class="u-panel"><figcaption>Recortada</figcaption><div class="u-frame u-check"><img id="imgOut" alt="Imagen con el fondo eliminado"></div></figure></div>
+      <div class="u-dl" id="dl" hidden><a class="btn btn--solid" id="dlPng" download="recorte.png">Descargar PNG</a><a class="btn btn--ghost" id="dlJpg" download="recorte.jpg">Descargar JPG</a></div>
+      <p class="u-note">La imagen no se sube a ningún servidor: el modelo corre en tu navegador. La primera vez tarda unos segundos.</p>
+    </div></section>
+
+    <!-- ===== 2 · JSON ===== -->
+    <section class="u-tool" id="u-json" aria-labelledby="json-title"><div class="u-tool__inner">
+      <h2 id="json-title" class="section-title"><em>{ }</em> Formateador JSON</h2>
+      <textarea id="jsonIn" class="u-ta" rows="6" placeholder="Pega aquí tu JSON…"></textarea>
+      <div class="u-bar"><button class="btn btn--solid" id="jsonFmt" type="button">Formatear</button><button class="btn btn--ghost" id="jsonMini" type="button">Minificar</button><button class="btn btn--ghost" id="jsonCopy" type="button">Copiar</button><p class="u-status" id="jsonStatus" role="status">Sin JSON.</p></div>
+      <pre id="jsonOut" class="u-pre" aria-live="polite"></pre>
+    </div></section>
+
+    <!-- ===== 3 · BASE64 ===== -->
+    <section class="u-tool" id="u-base64" aria-labelledby="b64-title"><div class="u-tool__inner">
+      <h2 id="b64-title" class="section-title"><em>⇄</em> Base64</h2>
+      <textarea id="b64In" class="u-ta" rows="4" placeholder="Texto o Base64…"></textarea>
+      <div class="u-bar"><button class="btn btn--solid" id="b64Enc" type="button">Codificar →</button><button class="btn btn--ghost" id="b64Dec" type="button">← Decodificar</button><button class="btn btn--ghost" id="b64Copy" type="button">Copiar</button></div>
+      <pre id="b64Out" class="u-pre" aria-live="polite"></pre>
+    </div></section>
+
+    <!-- ===== 4 · HASH ===== -->
+    <section class="u-tool" id="u-hash" aria-labelledby="hash-title"><div class="u-tool__inner">
+      <h2 id="hash-title" class="section-title"><em>#</em> Hash (SHA)</h2>
+      <input id="hashIn" class="u-in" type="text" placeholder="Texto a hashear…">
+      <div class="u-bar"><label class="u-sel"><select id="hashAlgo"><option value="SHA-256">SHA-256</option><option value="SHA-1">SHA-1</option><option value="SHA-512">SHA-512</option></select></label><button class="btn btn--solid" id="hashRun" type="button">Calcular</button><button class="btn btn--ghost" id="hashCopy" type="button">Copiar</button></div>
+      <pre id="hashOut" class="u-pre u-pre--break" aria-live="polite"></pre>
+    </div></section>
+
+    <!-- ===== 5 · COLOR ===== -->
+    <section class="u-tool" id="u-color" aria-labelledby="col-title"><div class="u-tool__inner">
+      <h2 id="col-title" class="section-title"><em>🎨</em> Conversor de color</h2>
+      <div class="u-color__row"><input id="colPick" type="color" value="#b9502f"><input id="colHex" class="u-in" type="text" value="#B9502F"></div>
+      <div class="u-color__out"><div class="u-color__swatch" id="colSw"></div><dl class="u-color__list"><div><dt>HEX</dt><dd id="colOHex">—</dd></div><div><dt>RGB</dt><dd id="colORgb">—</dd></div><div><dt>HSL</dt><dd id="colOHsl">—</dd></div><div><dt>CMYK</dt><dd id="colOCmyk">—</dd></div></dl></div>
+      <div class="u-color__palette" id="colPal" aria-label="Paleta armónica"></div>
+    </div></section>
+
+    <!-- ===== 6 · UUID / PASSWORD ===== -->
+    <section class="u-tool" id="u-uuid" aria-labelledby="id-title"><div class="u-tool__inner">
+      <h2 id="id-title" class="section-title"><em>🔑</em> UUID & contraseñas</h2>
+      <div class="u-bar"><button class="btn btn--solid" id="uuidRun" type="button">Generar UUID</button><button class="btn btn--ghost" id="uuidCopy" type="button">Copiar</button></div>
+      <pre id="uuidOut" class="u-pre" aria-live="polite"></pre>
+      <div class="u-pass__opts"><label><input type="checkbox" id="pUp" checked> Mayús</label><label><input type="checkbox" id="pLo" checked> Minús</label><label><input type="checkbox" id="pNu" checked> Números</label><label><input type="checkbox" id="pSy"> Símbolos</label><label class="u-len">Longitud <input type="range" id="pLen" min="8" max="32" value="16"><output id="pLenV">16</output></label></div>
+      <div class="u-bar"><button class="btn btn--solid" id="passRun" type="button">Generar contraseña</button><button class="btn btn--ghost" id="passCopy" type="button">Copiar</button></div>
+      <pre id="passOut" class="u-pre" aria-live="polite"></pre>
+    </div></section>
+
+    <!-- ===== 7 · REGEX ===== -->
+    <section class="u-tool" id="u-regex" aria-labelledby="re-title"><div class="u-tool__inner">
+      <h2 id="re-title" class="section-title"><em>.*</em> Validador de regex</h2>
+      <div class="u-re__row"><input id="rePat" class="u-in" type="text" placeholder="/patrón/"><span class="u-re__flags">/<input id="reFlags" class="u-in u-in--sm" type="text" value="g" aria-label="flags"></span></div>
+      <textarea id="reText" class="u-ta" rows="5" placeholder="Texto donde buscar…"></textarea>
+      <div class="u-bar"><p class="u-status" id="reStatus" role="status">Sin patrón.</p></div>
+      <pre id="reOut" class="u-pre u-pre--wrap" aria-live="polite"></pre>
+      <div class="u-re__groups" id="reGroups" aria-live="polite"></div>
+    </div></section>
+
+    <!-- ===== 8 · MINIFICADOR ===== -->
+    <section class="u-tool" id="u-min" aria-labelledby="min-title"><div class="u-tool__inner">
+      <h2 id="min-title" class="section-title"><em>🗜️</em> Minificador CSS / JS</h2>
+      <textarea id="minIn" class="u-ta" rows="8" placeholder="Pega tu CSS o JS…"></textarea>
+      <div class="u-bar"><button class="btn btn--solid" id="minRun" type="button">Minificar</button><button class="btn btn--ghost" id="minCopy" type="button">Copiar</button><p class="u-status" id="minStatus" role="status">Sin código.</p></div>
+      <pre id="minOut" class="u-pre u-pre--wrap" aria-live="polite"></pre>
+    </div></section>
+
+    <!-- ===== 9 · BASES ===== -->
+    <section class="u-tool" id="u-bases" aria-labelledby="base-title"><div class="u-tool__inner">
+      <h2 id="base-title" class="section-title"><em>01</em> Conversor de bases</h2>
+      <div class="u-bases__row"><label class="u-sel"><select id="baseFrom"><option value="10">Decimal</option><option value="2">Binario</option><option value="8">Octal</option><option value="16">Hexadecimal</option></select></label><input id="baseIn" class="u-in" type="text" value="42" placeholder="Número"></div>
+      <div class="u-bases__grid" id="baseOut" aria-live="polite"></div>
+      <pre id="baseSteps" class="u-pre u-pre--wrap" aria-live="polite"></pre>
+    </div></section>
+
+    <!-- ===== 10 · UNIDADES ===== -->
+    <section class="u-tool" id="u-unidades" aria-labelledby="un-title"><div class="u-tool__inner">
+      <h2 id="un-title" class="section-title"><em>📏</em> Conversor de unidades</h2>
+      <div class="u-un__row"><label class="u-sel"><select id="unCat"><option value="bytes">Bytes</option><option value="long">Longitud</option><option value="masa">Masa</option><option value="tiempo">Tiempo</option><option value="temp">Temperatura</option></select></label><input id="unVal" class="u-in" type="number" value="1" step="any"><label class="u-sel"><select id="unFrom"></select></label><span class="u-un__arrow">→</span><label class="u-sel"><select id="unTo"></select></label></div>
+      <div class="u-un__out"><output id="unOut" aria-live="polite"></output><p class="u-un__formula" id="unFormula"></p></div>
+    </div></section>
+
+    <!-- ===== 11 · ORDENACIÓN ===== -->
+    <section class="u-tool" id="u-orden" aria-labelledby="ord-title"><div class="u-tool__inner">
+      <h2 id="ord-title" class="section-title"><em>📊</em> Visualizador de ordenación</h2>
+      <div class="u-bar"><label class="u-sel"><select id="ordAlgo"><option value="bubble">Burbuja</option><option value="insertion">Inserción</option><option value="selection">Selección</option><option value="quick">Quick sort</option></select></label><button class="btn btn--solid" id="ordRun" type="button">Reproducir</button><button class="btn btn--ghost" id="ordShuffle" type="button">Mezclar</button><label class="u-len">Velocidad <input type="range" id="ordSpeed" min="1" max="60" value="30"></label></div>
+      <div class="u-bars" id="ordBars" aria-live="polite"></div>
+      <p class="u-status" id="ordStatus" role="status"></p>
+    </div></section>
+
+    <!-- ===== 12 · MONTE CARLO ===== -->
+    <section class="u-tool" id="u-montecarlo" aria-labelledby="mc-title"><div class="u-tool__inner">
+      <h2 id="mc-title" class="section-title"><em>🎲</em> Monte Carlo: π</h2>
+      <div class="u-bar"><button class="btn btn--solid" id="mcRun" type="button">Lanzar</button><button class="btn btn--ghost" id="mcPause" type="button">Pausar</button><button class="btn btn--ghost" id="mcReset" type="button">Reset</button><p class="u-status" id="mcStatus" role="status">0 puntos · π ≈ —</p></div>
+      <div class="u-mc__wrap"><canvas id="mcCanvas" width="360" height="360" aria-label="Simulación Monte Carlo"></canvas><dl class="u-mc__stats"><div><dt>Puntos</dt><dd id="mcN">0</dd></div><div><dt>Dentro</dt><dd id="mcD">0</dd></div><div><dt>π aprox.</dt><dd id="mcPi">—</dd></div><div><dt>Error</dt><dd id="mcErr">—</dd></div></dl></div>
+    </div></section>
+
+    <!-- ===== 13 · RLE ===== -->
+    <section class="u-tool" id="u-rle" aria-labelledby="rle-title"><div class="u-tool__inner">
+      <h2 id="rle-title" class="section-title"><em>🧩</em> Compresor RLE</h2>
+      <textarea id="rleIn" class="u-ta" rows="4" placeholder="Texto con repeticiones, p. ej. aabbbbcccc…"></textarea>
+      <div class="u-bar"><button class="btn btn--solid" id="rleEnc" type="button">Comprimir</button><button class="btn btn--ghost" id="rleDec" type="button">Descomprimir</button><p class="u-status" id="rleStatus" role="status">Sin texto.</p></div>
+      <pre id="rleOut" class="u-pre u-pre--wrap" aria-live="polite"></pre>
+    </div></section>
   </main>
 
   <footer id="contacto" class="footer" aria-labelledby="footer-title">
-    <div class="footer__grid">
-      <div class="footer__intro">
-        <p class="eyebrow eyebrow--light"><span class="eyebrow__num">04</span><span class="eyebrow__line" aria-hidden="true"></span> Contacto</p>
-        <h2 id="footer-title" class="footer__title">¿Hablamos?</h2>
-        <p class="footer__text">Si quieres proponerme algo o simplemente saludar, escríbeme. Respondo rápido.</p>
-      </div>
-      <address class="footer__contacto">
-        <ul>
-          <li><span class="footer__key">Correo</span><a href="mailto:archaquet@gmail.com">archaquet@gmail.com</a></li>
-          <li><span class="footer__key">Teléfono</span><a href="tel:+34643892373">+34 643 89 23 73</a></li>
-          <li><span class="footer__key">Ubicación</span><span>Xàtiva · València · España</span></li>
-        </ul>
-      </address>
-    </div>
-    <div class="footer__bottom">
-      <p>© <span id="anio">2025</span> Álvaro Ripoll Chaquet</p>
-      <p class="footer__meta">Hecho a mano con HTML, CSS y JavaScript · <a href="index.html">Volver a la portada ↑</a></p>
-    </div>
+    <div class="footer__grid"><div class="footer__intro"><p class="eyebrow eyebrow--light"><span class="eyebrow__num">04</span><span class="eyebrow__line" aria-hidden="true"></span> Contacto</p><h2 id="footer-title" class="footer__title">¿Hablamos?</h2><p class="footer__text">Si quieres proponerme algo o simplemente saludar, escríbeme. Respondo rápido.</p></div><address class="footer__contacto"><ul><li><span class="footer__key">Correo</span><a href="mailto:archaquet@gmail.com">archaquet@gmail.com</a></li><li><span class="footer__key">Ubicación</span><span>Xàtiva · València · España</span></li></ul></address></div>
+    <div class="footer__bottom"><p>© <span id="anio">2025</span> Álvaro Ripoll Chaquet</p><p class="footer__meta">Hecho a mano con HTML, CSS y JavaScript · <a href="index.html">Volver a la portada ↑</a></p></div>
   </footer>
 
   <script src="utilidades.js" defer></script>
-  <script src="chatbot.js" defer></script>
 </body>
 </html>
