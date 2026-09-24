@@ -8,7 +8,7 @@
   'use strict';
 
   /* ---- CONFIG SUPABASE (pega tus valores) ---- */
-  var SUPABASE_URL = 'https://tbzfvzvpmxerluoyuwto.supabase.co/rest/v1/';   // <-- Project URL
+  var SUPABASE_URL = 'https://tbzfvzvpmxerluoyuwto.supabase.co';   // <-- Project URL
   var SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRiemZ2enZwbXhlcmx1b3l1d3RvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTAyNTU5OTcsImV4cCI6MjEwNTgzMTk5N30.iVrPMcsDOIk7VGQs6i_tMdS_UKupWiESdby8WhqUDb8';                  // <-- anon public key
   var TABLE = 'resenas';
   /* -------------------------------------------- */
