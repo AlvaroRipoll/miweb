@@ -496,6 +496,46 @@
                 <span class="chip chip--plain">Proyectos propios</span>
             </p>
         </section>
+ <!-- ========================================================
+     4. RESENAS (compartidas via Supabase)
+     El grid se rellena dinamicamente desde la base de datos.
+     ======================================================== -->
+<section id="resenas" class="reviews" aria-labelledby="rev-title">
+  <header class="section-head">
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">04</span><span class="eyebrow__line" aria-hidden="true"></span> Resenas</p>
+    <h2 id="rev-title" class="section-title section-title--wide" data-reveal>Lo que dicen <em>quienes han trabajado</em> con el.</h2>
+  </header>
+
+  <div class="rev-summary" data-reveal>
+    <div class="rev-score">
+      <span class="rev-score__num" id="rev-media">-</span>
+      <div class="rev-stars" id="rev-stars-display" aria-label="media"></div>
+      <span class="rev-score__count" id="rev-total">cargando...</span>
+    </div>
+    <div class="rev-bars" id="rev-bars" aria-hidden="true"></div>
+  </div>
+
+  <div class="rev-grid" id="rev-grid" data-reveal>
+    <p class="rev-empty">Cargando resenas...</p>
+  </div>
+
+  <!-- Formulario de resena del visitante -->
+  <div class="rev-rate" data-reveal>
+    <div class="rev-rate__q">Deja tu resena</div>
+    <form id="rev-form" class="rev-form">
+      <div class="rev-form__stars" id="rev-rate-stars" role="radiogroup" aria-label="Puntuar de 1 a 5"></div>
+      <div class="rev-form__row">
+        <input id="rev-name" class="rev-form__name" type="text" maxlength="40" placeholder="Tu nombre" aria-label="Tu nombre">
+      </div>
+      <textarea id="rev-text" class="rev-form__text" rows="3" maxlength="280" placeholder="Tu comentario (max. 280)" aria-label="Tu comentario"></textarea>
+      <div class="rev-form__foot">
+        <button type="submit" class="btn btn--solid">Enviar resena</button>
+        <button type="button" class="btn btn--ghost" id="rev-mine-clear">Borrar las mias</button>
+        <span class="rev-form__status" id="rev-status" role="status" aria-live="polite"></span>
+      </div>
+    </form>
+  </div>
+</section>
 
     </main>
 
@@ -552,8 +592,8 @@
 
     <!-- Script principal (animaciones, reloj, reveals) -->
     <script src="script.js" defer></script>
-
     <script src="chatbot.js" defer></script>
+    <script src="resenas.js" defer></script>
 </body>
 
 </html>

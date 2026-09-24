@@ -8,6 +8,22 @@
     'use strict';
     var root = document.documentElement;
     var REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    /* --- Notificacion al movil (ntfy.sh) --- */
+    var NTFY_ON = true;                                   // false para desactivar
+    var NTFY_TOPIC = 'alvarochat-7f3k9q2x';               // CAMBIA esto por tu topic
+    var NTFY_URL = 'https://ntfy.sh/' + NTFY_TOPIC;
+    var yaAvisado = false;
+    function avisar(msg) {
+        if (!NTFY_ON || yaAvisado) return;
+        yaAvisado = true;                                   // 1 aviso por carga de pagina
+        try {
+            fetch(NTFY_URL, {
+                method: 'POST',
+                headers: { 'Title': 'Chat abierto en mi web', 'Tags': 'speech_balloon' },
+                body: msg
+            });
+        } catch (_) { }
+    }
 
     /* ---------------------------------------------------------------------
        BASE DE CONOCIMIENTO
@@ -119,26 +135,26 @@
     }
 
     /* --- Busca el tema con más coincidencias ----------------------------- */
-     function buscar(texto){
-    var t = norm(texto), padded = ' ' + t + ' ', best = 0, id = null;
-    TEMAS.forEach(function(tema){
-      var score = 0;
-      tema.kw.forEach(function(k){
-        var kn = norm(k);
-        if (k.indexOf(' ') > -1){                       // frase (con espacios)
-          if (t.indexOf(kn) > -1) score += 2;           // frase literal contenida
-          else {                                        // tolerancia: todas las palabras presentes
-            var ws = kn.split(' ');
-            if (ws.every(function(w){ return padded.indexOf(' ' + w + ' ') > -1; })) score += 1;
-          }
-        } else {                                         // palabra suelta exacta
-          if (padded.indexOf(' ' + kn + ' ') > -1) score += 2;
-        }
-      });
-      if (score > best){ best = score; id = tema.id; }
-    });
-    return (id && best > 0) ? TEMAS.filter(function(x){ return x.id === id; })[0] : null;
-  }
+    function buscar(texto) {
+        var t = norm(texto), padded = ' ' + t + ' ', best = 0, id = null;
+        TEMAS.forEach(function (tema) {
+            var score = 0;
+            tema.kw.forEach(function (k) {
+                var kn = norm(k);
+                if (k.indexOf(' ') > -1) {                       // frase (con espacios)
+                    if (t.indexOf(kn) > -1) score += 2;           // frase literal contenida
+                    else {                                        // tolerancia: todas las palabras presentes
+                        var ws = kn.split(' ');
+                        if (ws.every(function (w) { return padded.indexOf(' ' + w + ' ') > -1; })) score += 1;
+                    }
+                } else {                                         // palabra suelta exacta
+                    if (padded.indexOf(' ' + kn + ' ') > -1) score += 2;
+                }
+            });
+            if (score > best) { best = score; id = tema.id; }
+        });
+        return (id && best > 0) ? TEMAS.filter(function (x) { return x.id === id; })[0] : null;
+    }
 
     /* =====================================================================
        WIDGET
@@ -205,6 +221,7 @@
         aplicarTamanio();
         if (!conv.length) { conv.push({ r: 'bot', t: SALUDO }); burbuja('bot', SALUDO); guardarConv(); }
         else { log.innerHTML = ''; conv.forEach(function (m) { burbuja(m.r, m.t); }); }
+        avisar('Alguien abrio el chat (' + new Date().toLocaleString('es-ES') + ')');
         setTimeout(function () { input.focus(); }, 60);
     }
     function cerrar() { panel.hidden = true; bubble.setAttribute('aria-expanded', 'false'); }

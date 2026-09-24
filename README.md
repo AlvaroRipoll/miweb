@@ -7,4 +7,4 @@ Web personal de Álvaro Ripoll Chaquet, estudiante de 1º DAM (el Simarro, Xàti
 - HTML + CSS + JS puro, sin frameworks.
 - Modo claro/oscuro con `localStorage`, partículas de cursor y responsive.
 
-Ver la web: *añade aquí tu enlace de GitHub Pages cuando lo actives*.
+Ver la web: https://alvaroripoll.github.io/miweb/
