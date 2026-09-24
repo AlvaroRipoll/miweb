@@ -10,7 +10,7 @@
     var REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
     /* --- Notificacion al movil (ntfy.sh) --- */
     var NTFY_ON = true;                                   // false para desactivar
-    var NTFY_TOPIC = 'alvarochat-7f3k9q2x';               // CAMBIA esto por tu topic
+    var NTFY_TOPIC = 'alvarowebprogramacion2838462';               // CAMBIA esto por tu topic
     var NTFY_URL = 'https://ntfy.sh/' + NTFY_TOPIC;
     var yaAvisado = false;
     function avisar(msg) {
