@@ -82,7 +82,7 @@
   function pintar(lista){
     if(!grid) return;
     grid.innerHTML='';
-    if(!lista.length){ var p=document.createElement('p'); p.className='rev-empty'; p.textContent='Sin resenas todavia. Se el primero.'; grid.appendChild(p); return; }
+    if(!lista.length){ var p=document.createElement('p'); p.className='rev-empty'; p.textContent='Sin reseñas todavia. Se el primero.'; grid.appendChild(p); return; }
     lista.forEach(function(r){ grid.appendChild(tarjeta(r)); });
   }
 
@@ -91,7 +91,7 @@
     fetch(REST+'?select=*&order=destacada.desc,creado_en.desc',{headers:HEADERS})
       .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
       .then(function(data){ pintar(data); resumen(data); })
-      .catch(function(e){ console.error(e); if(grid){ grid.innerHTML='<p class="rev-empty">No se pudieron cargar las resenas. Revisa la URL/clave de Supabase.</p>'; } });
+      .catch(function(e){ console.error(e); if(grid){ grid.innerHTML='<p class="rev-empty">No se pudieron cargar las reseñas. Revisa la URL/clave de Supabase.</p>'; } });
   }
 
   /* --- formulario: estrellas interactivas (hover rellena todas las anteriores) --- */
@@ -144,7 +144,7 @@
       .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r; })
       .then(function(){
         nameIn.value=''; textIn.value=''; saved=0; paint();
-        avisar('Resena enviada. Gracias.',false);
+        avisar('Reseña enviada. Gracias.',false);
         cargar();                       // recargo para verla junto a las demas
         setTimeout(function(){ bloqueado=false; },3000);   // cooldown anti-spam
       })
@@ -158,7 +158,7 @@
       if(bloqueado) return; bloqueado=true; avisar('Borrando las tuyas...',false);
       fetch(REST+'?cliente_id=eq.'+encodeURIComponent(clienteId()),{ method:'DELETE', headers:HEADERS })
         .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); })
-        .then(function(){ avisar('Resenas propias borradas.',false); cargar(); setTimeout(function(){ bloqueado=false; },1500); })
+        .then(function(){ avisar('Reseñas propias borradas.',false); cargar(); setTimeout(function(){ bloqueado=false; },1500); })
         .catch(function(err){ console.error(err); avisar('No se pudo borrar.',true); bloqueado=false; });
     });
   }

@@ -10,7 +10,7 @@
     var REDUCE = matchMedia('(prefers-reduced-motion: reduce)').matches;
     /* --- Notificacion al movil (ntfy.sh) --- */
     var NTFY_ON = true;                                   // false para desactivar
-    var NTFY_TOPIC = 'alvarowebprogramacion2848462';               // CAMBIA esto por tu topic
+    var NTFY_TOPIC = 'alvarowebprogramacion284se puede añadir un compresor de video al apartado utilidades? y un conversor a codigo qr que pueda convertir imagenes, enlaces...8462';               // CAMBIA esto por tu topic
     var NTFY_URL = 'https://ntfy.sh/' + NTFY_TOPIC;
     var yaAvisado = false;
     function avisar(msg) {

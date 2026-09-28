@@ -14,7 +14,18 @@
 
     <!-- Paleta básica antes de que cargue la hoja de estilos (evita flash) -->
     <meta name="theme-color" content="#F6F3EC">
+    <!-- Favicon + icono para iOS -->
+    <link rel="icon" href="img/logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="img/logo.png">
 
+    <!-- Open Graph: imagen y datos al compartir en WhatsApp/LinkedIn -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Álvaro Ripoll Chaquet — Estudiante de DAM · Xàtiva">
+    <meta property="og:description" content="Web personal de Álvaro Ripoll Chaquet. Matemáticas, informática, deporte y negocios.">
+    <meta property="og:url" content="https://alvaroripoll.github.io/miweb/">
+    <meta property="og:image" content="https://alvaroripoll.github.io/miweb/img/logo.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:image" content="https://alvaroripoll.github.io/miweb/img/logo.png">
     <!-- Tipografías: display (Fraunces) + texto (Public Sans) + datos (IBM Plex Mono) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,8 +69,7 @@
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <header class="topbar" role="banner">
         <a href="#portada" class="monograma" aria-label="Inicio — Álvaro Ripoll Chaquet">
-            <span class="monograma__mark">AR</span>
-            <span class="monograma__text">Álvaro Ripoll</span>
+            <span class="monograma__logo"><img src="img/logo.png" alt="Monograma AR — Álvaro Ripoll" width="34" height="34"></span>            <span class="monograma__text">Álvaro Ripoll</span>
         </a>
 
         <nav class="topnav" id="menu" aria-label="Navegación principal">
@@ -500,9 +510,9 @@
      4. RESENAS (compartidas via Supabase)
      El grid se rellena dinamicamente desde la base de datos.
      ======================================================== -->
-<section id="resenas" class="reviews" aria-labelledby="rev-title">
+<section id="reseñas" class="reviews" aria-labelledby="rev-title">
   <header class="section-head">
-    <p class="eyebrow" data-reveal><span class="eyebrow__num">04</span><span class="eyebrow__line" aria-hidden="true"></span> Resenas</p>
+    <p class="eyebrow" data-reveal><span class="eyebrow__num">04</span><span class="eyebrow__line" aria-hidden="true"></span> Reseñas</p>
     <h2 id="rev-title" class="section-title section-title--wide" data-reveal>Lo que dicen <em>quienes han trabajado</em> con el.</h2>
   </header>
 
@@ -516,12 +526,12 @@
   </div>
 
   <div class="rev-grid" id="rev-grid" data-reveal>
-    <p class="rev-empty">Cargando resenas...</p>
+    <p class="rev-empty">Cargando reseñas...</p>
   </div>
 
   <!-- Formulario de resena del visitante -->
   <div class="rev-rate" data-reveal>
-    <div class="rev-rate__q">Deja tu resena</div>
+    <div class="rev-rate__q">Deja tu reseña</div>
     <form id="rev-form" class="rev-form">
       <div class="rev-form__stars" id="rev-rate-stars" role="radiogroup" aria-label="Puntuar de 1 a 5"></div>
       <div class="rev-form__row">
@@ -529,7 +539,7 @@
       </div>
       <textarea id="rev-text" class="rev-form__text" rows="3" maxlength="280" placeholder="Tu comentario (max. 280)" aria-label="Tu comentario"></textarea>
       <div class="rev-form__foot">
-        <button type="submit" class="btn btn--solid">Enviar resena</button>
+        <button type="submit" class="btn btn--solid">Enviar reseña</button>
         <button type="button" class="btn btn--ghost" id="rev-mine-clear">Borrar las mias</button>
         <span class="rev-form__status" id="rev-status" role="status" aria-live="polite"></span>
       </div>
@@ -585,6 +595,7 @@
 
         <!-- Cierre: copia y detalle de la página -->
         <div class="footer__bottom">
+                  <img class="footer__logo" src="img/logo.png" alt="Álvaro Ripoll — monograma AR" width="44" height="44">
             <p>© <span id="anio">2025</span> Álvaro Ripoll Chaquet</p>
             <p class="footer__meta">Hecho a mano con HTML, CSS y JavaScript · <a href="#portada">Volver arriba ↑</a></p>
         </div>
