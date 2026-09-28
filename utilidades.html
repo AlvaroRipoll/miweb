@@ -69,6 +69,7 @@
         <a class="u-card" href="#u-montecarlo" data-reveal><span class="u-card__icon">🎲</span><span class="u-card__tag tag--math">Matemáticas</span><span class="u-card__title">Monte Carlo π</span><span class="u-card__desc">Aproxima π lanzando puntos al azar.</span><span class="u-card__go" aria-hidden="true">→</span></a>
         <a class="u-card" href="#u-rle" data-reveal><span class="u-card__icon">🧩</span><span class="u-card__tag tag--math">Matemáticas</span><span class="u-card__title">Compresor RLE</span><span class="u-card__desc">Comprime y descomprime texto, con ratio.</span><span class="u-card__go" aria-hidden="true">→</span></a>
         <a class="u-card" href="#u-scratch" data-reveal><span class="u-card__icon">SCR</span><span class="u-card__tag tag--visual">Visual</span><span class="u-card__title">Scratch: Python / Java / C++</span><span class="u-card__desc">Aprende bucles, condicionales y variables con bloques.</span><span class="u-card__go" aria-hidden="true">-&gt;</span></a>
+        <a class="u-card" href="#u-qr" data-reveal><span class="u-card__icon">[ ]</span><span class="u-card__tag tag--front">Front</span><span class="u-card__title">Generador QR</span><span class="u-card__desc">Convierte enlaces y texto en un codigo QR para descargar.</span><span class="u-card__go" aria-hidden="true">-&gt;</span></a>
       </div>
     </section>
 
@@ -228,6 +229,22 @@
     </div>
   </div>
 </div></section>
+
+<!-- ===== 15 · GENERADOR QR ===== -->
+<section class="u-tool" id="u-qr" aria-labelledby="qr-title"><div class="u-tool__inner">
+  <h2 id="qr-title" class="section-title"><em>[ ]</em> Generador de codigo QR</h2>
+  <p class="u-sub">Pega un enlace o un texto y genera un QR. <strong>Se crea en tu navegador</strong>, sin servidores. (Imagen a QR no es posible: un QR guarda ~3 KB, una foto no cabe.)</p>
+  <textarea id="qr-text" class="u-ta" rows="3" placeholder="https://alvaroripoll.github.io/miweb/  o cualquier texto..."></textarea>
+  <div class="qr-row">
+    <label class="qr-color"><span>Modulos</span><input type="color" id="qr-dark" value="#1E1B16"></label>
+    <label class="qr-color"><span>Fondo</span><input type="color" id="qr-light" value="#FFFFFF"></label>
+    <button class="btn btn--solid" id="qr-run" type="button">Generar QR</button>
+    <button class="btn btn--ghost" id="qr-dl" type="button" disabled>Descargar PNG</button>
+    <button class="btn btn--ghost" id="qr-copy" type="button" disabled>Copiar imagen</button>
+  </div>
+  <div class="qr-out"><canvas id="qr-canvas" width="512" height="512" aria-label="Codigo QR generado"></canvas></div>
+  <p class="u-status" id="qr-status" role="status" aria-live="polite">Escribe algo y pulsa Generar.</p>
+</div></section>
   </main>
 
   <footer id="contacto" class="footer" aria-labelledby="footer-title">
@@ -237,5 +254,6 @@
 
   <script src="utilidades.js" defer></script>
   <script src="utilidades-scratch.js" defer></script>
+  <script src="utilidades-qr.js" defer></script>
 </body>
 </html>
