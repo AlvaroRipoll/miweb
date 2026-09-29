@@ -21,7 +21,8 @@
     <!-- Open Graph: imagen y datos al compartir en WhatsApp/LinkedIn -->
     <meta property="og:type" content="website">
     <meta property="og:title" content="Álvaro Ripoll Chaquet — Estudiante de DAM · Xàtiva">
-    <meta property="og:description" content="Web personal de Álvaro Ripoll Chaquet. Matemáticas, informática, deporte y negocios.">
+    <meta property="og:description"
+        content="Web personal de Álvaro Ripoll Chaquet. Matemáticas, informática, deporte y negocios.">
     <meta property="og:url" content="https://alvaroripoll.github.io/miweb/">
     <meta property="og:image" content="https://alvaroripoll.github.io/miweb/img/logo.png">
     <meta name="twitter:card" content="summary">
@@ -32,9 +33,9 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,800;1,9..144,400&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap"
         rel="stylesheet">
-   
-        <link rel="stylesheet" href="chatbot.css">
-        <!-- Aplica el tema guardado antes de pintar (evita el flash claro/oscuro) -->
+
+    <link rel="stylesheet" href="chatbot.css">
+    <!-- Aplica el tema guardado antes de pintar (evita el flash claro/oscuro) -->
     <script>
         (function () {
             try {
@@ -69,7 +70,8 @@
     <a class="skip-link" href="#contenido">Saltar al contenido</a>
     <header class="topbar" role="banner">
         <a href="#portada" class="monograma" aria-label="Inicio — Álvaro Ripoll Chaquet">
-            <span class="monograma__logo"><img src="img/logo.png" alt="Monograma AR — Álvaro Ripoll" width="34" height="34"></span>            <span class="monograma__text">Álvaro Ripoll</span>
+            <span class="monograma__logo"><img src="img/logo.png" alt="Monograma AR — Álvaro Ripoll" width="34"
+                    height="34"></span> <span class="monograma__text">Álvaro Ripoll</span>
         </a>
 
         <nav class="topnav" id="menu" aria-label="Navegación principal">
@@ -182,9 +184,8 @@
                 <aside class="hero__card" data-reveal data-reveal-delay="250" aria-label="Datos rápidos">
                     <!-- Foto principal: Alvaro -->
                     <figure class="hero__figure" data-tilt>
-                        <img src="img/alvaro.jpg"
-                            alt="Álvaro Ripoll Chaquet" class="kenburns"
-                            loading="eager" width="900" height="1100">
+                        <img src="img/alvaro.jpg" alt="Álvaro Ripoll Chaquet" class="kenburns" loading="eager"
+                            width="900" height="1100">
                     </figure>
 
                     <dl class="spec">
@@ -279,7 +280,7 @@
                     </p>
 
                     <!-- Mini-perfil en lista, no en tarjetas repetidas -->
-   <!--                <dl class="facts" data-reveal data-reveal-delay="100">
+                    <!--                <dl class="facts" data-reveal data-reveal-delay="100">
                         <div class="facts__item">
                             <dt>Idiomas</dt>
                             <dd>Castellano y valenciano nativos · Inglés <span class="badge">B2</span></dd>
@@ -506,105 +507,118 @@
                 <span class="chip chip--plain">Proyectos propios</span>
             </p>
         </section>
- <!-- ========================================================
+        <!-- ========================================================
      4. RESENAS (compartidas via Supabase)
      El grid se rellena dinamicamente desde la base de datos.
      ======================================================== -->
-<section id="reseñas" class="reviews" aria-labelledby="rev-title">
-  <header class="section-head">
-    <p class="eyebrow" data-reveal><span class="eyebrow__num">04</span><span class="eyebrow__line" aria-hidden="true"></span> Reseñas</p>
-    <h2 id="rev-title" class="section-title section-title--wide" data-reveal>Lo que dicen <em>quienes han trabajado</em> con el.</h2>
-  </header>
+        <section id="reseñas" class="reviews" aria-labelledby="rev-title">
+            <header class="section-head">
+                <p class="eyebrow" data-reveal><span class="eyebrow__num">04</span><span class="eyebrow__line"
+                        aria-hidden="true"></span> Reseñas</p>
+                <h2 id="rev-title" class="section-title section-title--wide" data-reveal>Lo que dicen <em>quienes han
+                        trabajado</em> con el.</h2>
+            </header>
 
-  <div class="rev-summary" data-reveal>
-    <div class="rev-score">
-      <span class="rev-score__num" id="rev-media">-</span>
-      <div class="rev-stars" id="rev-stars-display" aria-label="media"></div>
-      <span class="rev-score__count" id="rev-total">cargando...</span>
-    </div>
-    <div class="rev-bars" id="rev-bars" aria-hidden="true"></div>
-  </div>
+            <div class="rev-summary" data-reveal>
+                <div class="rev-score">
+                    <span class="rev-score__num" id="rev-media">-</span>
+                    <div class="rev-stars" id="rev-stars-display" aria-label="media"></div>
+                    <span class="rev-score__count" id="rev-total">cargando...</span>
+                </div>
+                <div class="rev-bars" id="rev-bars" aria-hidden="true"></div>
+            </div>
 
-  <div class="rev-grid" id="rev-grid" data-reveal>
-    <p class="rev-empty">Cargando reseñas...</p>
-  </div>
+            <div class="rev-grid" id="rev-grid" data-reveal>
+                <p class="rev-empty">Cargando reseñas...</p>
+            </div>
 
-  <!-- Formulario de resena del visitante -->
-  <div class="rev-rate" data-reveal>
-    <div class="rev-rate__q">Deja tu reseña</div>
-    <form id="rev-form" class="rev-form">
-      <div class="rev-form__stars" id="rev-rate-stars" role="radiogroup" aria-label="Puntuar de 1 a 5"></div>
-      <div class="rev-form__row">
-        <input id="rev-name" class="rev-form__name" type="text" maxlength="40" placeholder="Tu nombre" aria-label="Tu nombre">
-      </div>
-      <textarea id="rev-text" class="rev-form__text" rows="3" maxlength="280" placeholder="Tu comentario (max. 280)" aria-label="Tu comentario"></textarea>
-      <div class="rev-form__foot">
-        <button type="submit" class="btn btn--solid">Enviar reseña</button>
-        <button type="button" class="btn btn--ghost" id="rev-mine-clear">Borrar las mias</button>
-        <span class="rev-form__status" id="rev-status" role="status" aria-live="polite"></span>
-      </div>
-    </form>
-  </div>
-</section>
+            <!-- Formulario de resena del visitante -->
+            <div class="rev-rate" data-reveal>
+                <div class="rev-rate__q">Deja tu reseña</div>
+                <form id="rev-form" class="rev-form">
+                    <div class="rev-form__stars" id="rev-rate-stars" role="radiogroup" aria-label="Puntuar de 1 a 5">
+                    </div>
+                    <div class="rev-form__row">
+                        <input id="rev-name" class="rev-form__name" type="text" maxlength="40" placeholder="Tu nombre"
+                            aria-label="Tu nombre">
+                    </div>
+                    <textarea id="rev-text" class="rev-form__text" rows="3" maxlength="280"
+                        placeholder="Tu comentario (max. 280)" aria-label="Tu comentario"></textarea>
+                    <div class="rev-form__foot">
+                        <button type="submit" class="btn btn--solid">Enviar reseña</button>
+                        <button type="button" class="btn btn--ghost" id="rev-mine-clear">Borrar las mias</button>
+                        <span class="rev-form__status" id="rev-status" role="status" aria-live="polite"></span>
+                    </div>
+                </form>
+            </div>
+        </section>
 
     </main>
 
     <!-- ==========================================================
-       5. PIE DE PÁGINA CON CONTACTO
-       ========================================================== -->
+         PIE DE PAGINA · contacto (formulario) + enlaces legales + CV
+         ========================================================== -->
     <footer id="contacto" class="footer" aria-labelledby="footer-title">
         <div class="footer__grid">
-
             <div class="footer__intro">
-                <p class="eyebrow eyebrow--light" data-reveal>
-                    <span class="eyebrow__num">04</span>
-                    <span class="eyebrow__line" aria-hidden="true"></span>
-                    Contacto
-                </p>
-                <h2 id="footer-title" class="footer__title" data-reveal>
-                    ¿Hablamos?
-                </h2>
-                <p class="footer__text" data-reveal data-reveal-delay="100">
-                    Si quieres proponerme algo, corregirme una idea o simplemente saludar,
-                    escríbeme. Respondo rápido.
-                </p>
-            </div>
+                <p class="eyebrow eyebrow--light"><span class="eyebrow__num">05</span><span class="eyebrow__line"
+                        aria-hidden="true"></span> Contacto</p>
+                <h2 id="footer-title" class="footer__title">¿Hablamos?</h2>
+                <p class="footer__text">Deja tu nombre y tu correo y te escribo yo. También puedes pedirme el currículum
+                    desde abajo.</p>
 
-            <!-- Datos de contacto como address semántico -->
-            <address class="footer__contacto" data-reveal>
-                <ul>
-                    <li>
-                        <span class="footer__key">Correo</span>
-                        <a href="mailto:archaquet@gmail.com">archaquet@gmail.com</a>
-                    </li>
-                    <li>
-                        <span class="footer__key">Teléfono</span>
-                        <a href="tel:+34643892373">+34 643 89 23 73</a>
-                    </li>
-                    <li>
-                        <span class="footer__key">Ubicación</span>
-                        <span>Xàtiva · València · España</span>
-                    </li>
-                    <li>
-                        <span class="footer__key">Nacimiento</span>
-                        <span><time datetime="2007-08-16">16 de agosto de 2007</time></span>
-                    </li>
-                </ul>
-            </address>
+                <!-- Formulario: se envia por ntfy a mi movil (ver footer.js) -->
+                <form id="contact-form" class="contact-form" novalidate>
+                    <div class="contact-field">
+                        <label for="cf-name">Nombre</label>
+                        <input id="cf-name" name="name" type="text" autocomplete="name" placeholder="Tu nombre"
+                            required>
+                    </div>
+                    <div class="contact-field">
+                        <label for="cf-email">Correo electronico</label>
+                        <input id="cf-email" name="email" type="email" autocomplete="email"
+                            placeholder="tucorreo@ejemplo.com" required>
+                    </div>
+                    <div class="contact-field">
+                        <label for="cf-msg">Mensaje (opcional)</label>
+                        <textarea id="cf-msg" name="message" rows="3" placeholder="¿En que puedo ayudarte?"></textarea>
+                    </div>
+                    <!-- honeypot anti-spam: campo oculto que un humano no rellena -->
+                    <div class="contact-hp" aria-hidden="true"><label for="cf-site">No rellenar</label><input
+                            id="cf-site" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+                    <button type="submit" class="btn btn--solid">Enviar <span aria-hidden="true">-></span></button>
+                    <p class="contact-status" id="cf-status" role="status" aria-live="polite"></p>
+                </form>
+            </div>
         </div>
 
-        <!-- Cierre: copia y detalle de la página -->
+        <!-- Barra inferior: logo + enlaces -->
         <div class="footer__bottom">
-                  <img class="footer__logo" src="img/logo.png" alt="Álvaro Ripoll — monograma AR" width="44" height="44">
-            <p>© <span id="anio">2025</span> Álvaro Ripoll Chaquet</p>
-            <p class="footer__meta">Hecho a mano con HTML, CSS y JavaScript · <a href="#portada">Volver arriba ↑</a></p>
+            <span class="footer__brand"><img src="img/logo.png" alt="Monograma AR"> © <span id="anio">2025</span> Álvaro
+                Ripoll Chaquet</span>
+            <ul class="foot-links">
+                <li><button type="button" id="cv-open">Contacto</button></li>
+                <li><a href="legal.html#privacidad">Politica de privacidad</a></li>
+                <li><a href="legal.html#condiciones">Condiciones de uso</a></li>
+                <li><a href="legal.html#cookies">Politica de cookies</a></li>
+            </ul>
         </div>
     </footer>
+
+    <!-- Modal del curriculum (se abre con el boton "Contacto") -->
+    <div class="cv-modal" id="cv-modal" role="dialog" aria-modal="true" aria-label="Curriculum de Alvaro Ripoll"
+        aria-hidden="true">
+        <div class="cv-modal__dialog">
+            <button type="button" class="cv-modal__close" id="cv-close" aria-label="Cerrar curriculum">X</button>
+            <img src="img/cv.png" alt="Curriculum de Alvaro Ripoll Chaquet">
+        </div>
+    </div>
 
     <!-- Script principal (animaciones, reloj, reveals) -->
     <script src="script.js" defer></script>
     <script src="chatbot.js" defer></script>
     <script src="resenas.js?v=3" defer></script>
+    <script src="footer.js" defer></script>
 </body>
 
 </html>

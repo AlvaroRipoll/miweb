@@ -2041,3 +2041,303 @@ body {
   object-fit: contain;
   display: block;
 }
+
+/* ==========================================================================
+   FOOTER NUEVO + FORMULARIO DE CONTACTO + MODAL DEL CV
+   ========================================================================== */
+
+/* --- Cabecera del footer --- */
+.footer__intro .footer__title {
+  margin-bottom: .6rem;
+}
+
+.footer__text {
+  color: rgba(246, 243, 236, .75);
+  max-width: 46ch;
+  margin-bottom: 1.6rem;
+}
+
+/* --- Formulario de contacto --- */
+.contact-form {
+  display: grid;
+  gap: .9rem;
+  max-width: 520px;
+}
+
+.contact-field {
+  display: flex;
+  flex-direction: column;
+  gap: .35rem;
+}
+
+.contact-field label {
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  color: var(--terra);
+}
+
+.contact-field input,
+.contact-field textarea {
+  font: inherit;
+  color: #F1ECE2;
+  background: rgba(246, 243, 236, .06);
+  border: 1px solid rgba(246, 243, 236, .18);
+  border-radius: 10px;
+  padding: .7rem .9rem;
+  resize: vertical;
+}
+
+.contact-field input:focus,
+.contact-field textarea:focus {
+  outline: 2px solid var(--terra);
+  outline-offset: 1px;
+  background: rgba(246, 243, 236, .1);
+}
+
+.contact-field input::placeholder,
+.contact-field textarea::placeholder {
+  color: rgba(246, 243, 236, .45);
+}
+
+.contact-form .btn {
+  justify-self: start;
+}
+
+.contact-status {
+  font-family: var(--font-mono);
+  font-size: .82rem;
+  min-height: 1.2em;
+  color: var(--terra);
+}
+
+.contact-status.is-err {
+  color: #ff8a66;
+}
+
+.contact-hp {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* honeypot anti-spam */
+
+/* --- Barra inferior: logo + enlaces horizontales --- */
+.footer__bottom {
+  width: var(--w);
+  margin: clamp(2.5rem, 5vw, 4rem) auto 0;
+  padding-top: 1.4rem;
+  border-top: 1px solid rgba(246, 243, 236, .14);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+}
+
+.footer__brand {
+  display: inline-flex;
+  align-items: center;
+  gap: .7rem;
+  color: rgba(246, 243, 236, .7);
+  font-size: .85rem;
+}
+
+.footer__brand img {
+  width: 40px;
+  height: 40px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 3px;
+}
+
+.foot-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem 1.4rem;
+  list-style: none;
+}
+
+.foot-links li {
+  display: inline-flex;
+}
+
+.foot-links a,
+.foot-links button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: .3rem 0;
+  color: rgba(246, 243, 236, .8);
+  font: inherit;
+  font-size: .88rem;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: color .2s ease, border-color .2s ease;
+}
+
+.foot-links a:hover,
+.foot-links button:hover {
+  color: var(--terra);
+  border-bottom-color: var(--terra);
+}
+
+.foot-links .is-current {
+  color: var(--terra);
+}
+
+/* --- Modal del CV (lightbox) --- */
+.cv-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: grid;
+  place-items: center;
+  padding: 1.2rem;
+  background: rgba(10, 9, 7, .82);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .25s ease, visibility .25s ease;
+}
+
+.cv-modal.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.cv-modal__dialog {
+  position: relative;
+  max-width: min(900px, 92vw);
+  max-height: 88vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 14px;
+  padding: .8rem;
+  box-shadow: 0 30px 80px -20px rgba(0, 0, 0, .6);
+  transform: translateY(12px) scale(.98);
+  transition: transform .25s ease;
+}
+
+.cv-modal.is-open .cv-modal__dialog {
+  transform: none;
+}
+
+.cv-modal__dialog img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+}
+
+.cv-modal__close {
+  position: sticky;
+  top: 0;
+  margin-left: auto;
+  display: block;
+  width: 38px;
+  height: 38px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  background: var(--ink);
+  color: #fff;
+  font-size: 1.1rem;
+  line-height: 1;
+  z-index: 2;
+}
+
+.cv-modal__close:hover {
+  background: var(--terra-deep);
+}
+
+@media (max-width:600px) {
+  .footer__bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .foot-links {
+    gap: .4rem 1rem;
+  }
+}
+
+/* ============ PAGINAS LEGALES ============ */
+.legal {
+  width: var(--w);
+  margin: clamp(2.5rem, 7vw, 5rem) auto;
+  max-width: 760px;
+}
+
+.legal h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 1.4rem+3vw, 3rem);
+  margin-bottom: .4rem;
+}
+
+.legal h2 {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  margin: 1.8rem 0 .5rem;
+  color: var(--terra-deep);
+}
+
+.legal p,
+.legal li {
+  color: var(--ink-soft);
+  line-height: 1.7;
+}
+
+.legal ul {
+  padding-left: 1.2rem;
+  list-style: disc;
+}
+
+.legal li {
+  margin-bottom: .3rem;
+}
+
+.legal__meta {
+  font-family: var(--font-mono);
+  font-size: .78rem;
+  color: var(--ink-faint);
+}
+
+.legal__table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+  font-size: .9rem;
+}
+
+.legal__table th,
+.legal__table td {
+  border: 1px solid var(--line);
+  padding: .6rem .8rem;
+  text-align: left;
+}
+
+.legal__table th {
+  background: var(--paper-2);
+  font-family: var(--font-mono);
+  font-size: .72rem;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+}
+
+.legal__back {
+  margin-top: 2.5rem;
+}
+/* ============ PAGINA LEGAL (indice + secciones) ============ */
+.legal__nav{ display:flex; flex-wrap:wrap; gap:.6rem; margin:1.4rem 0 2rem; }
+.legal__nav a{ font-family:var(--font-mono); font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:var(--ink); background:var(--paper-2); border:1px solid var(--line); padding:.45rem .9rem; border-radius:999px; text-decoration:none; transition:border-color .2s, color .2s; }
+.legal__nav a:hover{ color:var(--terra-deep); border-color:var(--terra); }
+.legal__section{ scroll-margin-top: calc(var(--topbar-h) + 20px); padding-top:.5rem; }
+.legal__section h2{ font-family:var(--font-display); font-size:clamp(1.5rem,1.2rem+2vw,2.2rem); color:var(--ink); margin:0 0 .8rem; padding-bottom:.5rem; border-bottom:2px solid var(--terra); }
+.legal__section h3{ font-family:var(--font-display); font-size:1.1rem; margin:1.4rem 0 .4rem; color:var(--terra-deep); }

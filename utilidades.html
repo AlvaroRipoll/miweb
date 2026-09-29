@@ -259,10 +259,57 @@
 </div></section>
   </main>
 
-  <footer id="contacto" class="footer" aria-labelledby="footer-title">
-    <div class="footer__grid"><div class="footer__intro"><p class="eyebrow eyebrow--light"><span class="eyebrow__num">04</span><span class="eyebrow__line" aria-hidden="true"></span> Contacto</p><h2 id="footer-title" class="footer__title">¿Hablamos?</h2><p class="footer__text">Si quieres proponerme algo o simplemente saludar, escríbeme. Respondo rápido.</p></div><address class="footer__contacto"><ul><li><span class="footer__key">Correo</span><a href="mailto:archaquet@gmail.com">archaquet@gmail.com</a></li><li><span class="footer__key">Ubicación</span><span>Xàtiva · València · España</span></li></ul></address></div>
-    <div class="footer__bottom"><p>© <span id="anio">2025</span> Álvaro Ripoll Chaquet</p><p class="footer__meta">Hecho a mano con HTML, CSS y JavaScript · <a href="index.html">Volver a la portada ↑</a></p></div>
-  </footer>
+      <!-- ==========================================================
+         PIE DE PAGINA · contacto (formulario) + enlaces legales + CV
+         ========================================================== -->
+    <footer id="contacto" class="footer" aria-labelledby="footer-title">
+      <div class="footer__grid">
+        <div class="footer__intro">
+          <p class="eyebrow eyebrow--light"><span class="eyebrow__num">05</span><span class="eyebrow__line" aria-hidden="true"></span> Contacto</p>
+          <h2 id="footer-title" class="footer__title">¿Hablamos?</h2>
+          <p class="footer__text">Deja tu nombre y tu correo y te escribo yo. También puedes pedirme el currículum desde abajo.</p>
+
+          <!-- Formulario: se envia por ntfy a mi movil (ver footer.js) -->
+          <form id="contact-form" class="contact-form" novalidate>
+            <div class="contact-field">
+              <label for="cf-name">Nombre</label>
+              <input id="cf-name" name="name" type="text" autocomplete="name" placeholder="Tu nombre" required>
+            </div>
+            <div class="contact-field">
+              <label for="cf-email">Correo electronico</label>
+              <input id="cf-email" name="email" type="email" autocomplete="email" placeholder="tucorreo@ejemplo.com" required>
+            </div>
+            <div class="contact-field">
+              <label for="cf-msg">Mensaje (opcional)</label>
+              <textarea id="cf-msg" name="message" rows="3" placeholder="¿En que puedo ayudarte?"></textarea>
+            </div>
+            <!-- honeypot anti-spam: campo oculto que un humano no rellena -->
+            <div class="contact-hp" aria-hidden="true"><label for="cf-site">No rellenar</label><input id="cf-site" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+            <button type="submit" class="btn btn--solid">Enviar <span aria-hidden="true">-></span></button>
+            <p class="contact-status" id="cf-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+
+      <!-- Barra inferior: logo + enlaces -->
+      <div class="footer__bottom">
+        <span class="footer__brand"><img src="img/logo.png" alt="Monograma AR"> © <span id="anio">2025</span> Álvaro Ripoll Chaquet</span>
+        <ul class="foot-links">
+          <li><button type="button" id="cv-open">Contacto</button></li>
+          <li><a href="legal.html#privacidad">Politica de privacidad</a></li>
+          <li><a href="legal.html#condiciones">Condiciones de uso</a></li>
+          <li><a href="legal.html#cookies">Politica de cookies</a></li>
+        </ul>
+      </div>
+    </footer>
+
+    <!-- Modal del curriculum (se abre con el boton "Contacto") -->
+    <div class="cv-modal" id="cv-modal" role="dialog" aria-modal="true" aria-label="Curriculum de Alvaro Ripoll" aria-hidden="true">
+      <div class="cv-modal__dialog">
+        <button type="button" class="cv-modal__close" id="cv-close" aria-label="Cerrar curriculum">X</button>
+        <img src="img/cv.png" alt="Curriculum de Alvaro Ripoll Chaquet">
+      </div>
+    </div>
 
   <script src="utilidades.js" defer></script>
   <script src="utilidades-scratch.js" defer></script>
