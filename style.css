@@ -2508,3 +2508,48 @@ body {
   background: var(--color-acento);
   color: var(--sobre-acento);
 }
+/* ==========================================================================
+   MUÑECO RECORREDOR — pixel, corriendo (3 frames) + deslizamiento continuo
+   ========================================================================== */
+.tl-runner {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 30px;
+  height: 34px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  z-index: 5;
+  pointer-events: none;
+  will-change: transform;
+  /* SIN transicion de posicion: el suavizado lo da el JS (easing exponencial) */
+}
+
+.tl-runner__in { display: block; width: 100%; height: 100%; position: relative; }
+.tl-runner__in span { position: absolute; inset: 0; display: none; }
+.tl-runner__in span.on { display: block; }
+.tl-runner__in svg {
+  display: block; width: 100%; height: 100%;
+  image-rendering: pixelated; image-rendering: crisp-edges;
+  overflow: visible;
+}
+
+/* sombra en el suelo para que "pise" */
+.tl-runner::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -2px;
+  width: 18px;
+  height: 6px;
+  transform: translateX(-50%);
+  background: radial-gradient(closest-side, rgba(2,8,23,.6), transparent);
+  border-radius: 50%;
+  z-index: -1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* con reduce-motion el muñeco sigue el scroll (es ligado al tuyo, no auto)
+     pero no anima piernas: eso lo controla el JS con FORZAR */
+}
