@@ -12,39 +12,82 @@
    1. VARIABLES DE DISEÑO (tokens)
    -------------------------------------------------------------------------- */
 :root {
-  /* Color */
-  --paper: #F6F3EC;
-  --paper-2: #FBF9F4;
-  --ink: #1E1B16;
-  --ink-soft: #5A544B;
-  --ink-faint: #8A8378;
-  --terra: #B9502F;
-  --terra-deep: #963A1E;
-  --blue: #2B4C7E;
-  --line: rgba(30, 27, 22, .12);
-  --line-strong: rgba(30, 27, 22, .22);
-  --grid-line: rgba(30, 27, 22, .045);
-  --scrim: rgba(20, 17, 13, .55);
+  /* ===== Paleta: Azul Mediterráneo (moderna + elegante) ===== */
+  --color-fondo: #0A0F1E;          /* azul noche profundo */
+  --color-fondo-2: #0F172A;        /* azul noche medio    */
+  --color-panel: #16203A;          /* tarjetas            */
+  --color-panel-2: #1E2B4A;        /* tarjetas elevadas   */
 
-  /* Tipografía */
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
-  --font-body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+  --color-texto: #EAF1FB;
+  --color-texto-suave: #9FB2CC;
+  --color-texto-tenue: #64748B;
 
-  /* Medidas */
-  --container: 900px;
-  /* ancho máximo del contenido */
-  --pad: clamp(1.25rem, 5vw, 2.5rem);
-  /* padding lateral generoso */
-  --gap: clamp(1.5rem, 4vw, 2.75rem);
+  --color-acento: #38BDF8;         /* cian mediterráneo   */
+  --color-acento-oscuro: #0EA5E9;
+  --color-acento-suave: rgba(56, 189, 248, 0.14);
+
+  --color-secundario: #FBBF24;     /* oro champan         */
+  --color-secundario-oscuro: #F59E0B;
+  --color-secundario-suave: rgba(251, 191, 36, 0.14);
+
+  --color-terciario: #34D399;      /* verde jade          */
+  --color-terciario-oscuro: #10B981;
+  --color-terciario-suave: rgba(52, 211, 153, 0.14);
+
+  --color-morado: #818CF8;
+  --color-morado-oscuro: #6366F1;
+  --color-morado-suave: rgba(129, 140, 248, 0.14);
+
+  --color-peligro: #FB7185;
+  --color-peligro-oscuro: #F43F5E;
+  --color-peligro-suave: rgba(251, 113, 133, 0.14);
+
+  --color-borde: rgba(148, 163, 184, 0.18);
+  --color-borde-suave: rgba(148, 163, 184, 0.30);
+
+  --color-sombra: rgba(2, 8, 23, 0.55);
+  --color-sombra-acento: rgba(56, 189, 248, 0.22);
+  --color-glass: rgba(15, 23, 42, 0.62);
+
+  /* Color de texto cuando el fondo es un acento claro */
+  --sobre-acento: #06101F;
+  /* Bandas oscuras (footer / próximo paso / consola / valorar) */
+  --banda-oscura: #0A1224;
+  --banda-oscura-2: #060B16;
+
+  --degradado-principal: linear-gradient(135deg, #38BDF8 0%, #6366F1 100%);
+  --degradado-suave: linear-gradient(135deg, rgba(56,189,248,.16), rgba(129,140,248,.12));
+  --degradado-oro: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  --degradado-panel: linear-gradient(180deg, rgba(22,32,58,.92) 0%, rgba(10,15,30,.92) 100%);
+
+  /* ===== Alias: el CSS heredado usa estos nombres.
+     Aquí es donde la paleta "entra" en todo el sitio. ===== */
+  --paper: var(--color-fondo);
+  --paper-2: var(--color-panel);
+  --ink: var(--color-texto);
+  --ink-soft: var(--color-texto-suave);
+  --ink-faint: var(--color-texto-tenue);
+  --terra: var(--color-acento);
+  --terra-deep: var(--color-acento-oscuro);
+  --blue: var(--color-secundario);
+  --line: var(--color-borde);
+  --line-strong: var(--color-borde-suave);
+  --grid-line: rgba(56, 189, 248, 0.05);
+  --scrim: rgba(2, 8, 23, 0.7);
+
+  --shadow-sm: 0 1px 2px rgba(2,8,23,.4), 0 4px 14px rgba(2,8,23,.35);
+  --shadow-md: 0 10px 30px -8px rgba(2,8,23,.6), 0 2px 8px rgba(2,8,23,.4);
+  --radius: 12px;
+  --radius-lg: 20px;
+  --gap: 1.6rem;
+  --w: min(1120px, 92%);
+  --pad: 1.4rem;
   --topbar-h: 64px;
-  --radius: 14px;
-  --radius-lg: 22px;
-  --shadow-sm: 0 1px 2px rgba(30, 27, 22, .05), 0 8px 24px -18px rgba(30, 27, 22, .25);
-  --shadow-md: 0 2px 6px rgba(30, 27, 22, .06), 0 24px 50px -30px rgba(30, 27, 22, .35);
+  --container: 1120px;
 
-  /* Ancho útil con respiración lateral (para elementos centrados) */
-  --w: min(var(--container), 100% - var(--pad) * 2);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Public Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
 }
 
 /* --------------------------------------------------------------------------
@@ -1418,23 +1461,53 @@ html.js [data-reveal].is-visible {
 
 /* --- 1. Tokens del modo oscuro (sobrescriben los de :root) -------------- */
 [data-theme="dark"] {
-  --paper: #141210;
-  /* fondo de página (casi negro cálido) */
-  --paper-2: #1D1B17;
-  /* tarjetas / superficies elevadas     */
-  --ink: #F1ECE2;
-  /* texto principal (ahora claro)       */
-  --ink-soft: #C9C2B6;
-  --ink-faint: #9A9285;
-  --terra: #E07A4E;
-  /* terracota más vivo sobre fondo oscuro */
-  --terra-deep: #C86A42;
-  --blue: #7FA6D8;
-  /* azul tinta más claro para contraste   */
-  --line: rgba(241, 236, 226, .14);
-  --line-strong: rgba(241, 236, 226, .26);
-  --grid-line: rgba(241, 236, 226, .05);
-  --scrim: rgba(10, 9, 7, .6);
+  --paper: #0A0F1E;
+  --paper-2: #16203A;
+  --ink: #EAF1FB;
+  --ink-soft: #9FB2CC;
+  --ink-faint: #64748B;
+  --terra: #38BDF8;
+  --terra-deep: #0EA5E9;
+  --blue: #FBBF24;
+  --line: rgba(148,163,184,.18);
+  --line-strong: rgba(148,163,184,.30);
+  --grid-line: rgba(56,189,248,.05);
+  --scrim: rgba(2,8,23,.7);
+  --color-glass: rgba(15,23,42,.62);
+  --sobre-acento: #06101F;
+}
+
+/* Modo claro mediterráneo (por si activas el toggle) */
+[data-theme="light"] {
+  --color-fondo: #F1F6FD;
+  --color-fondo-2: #E6EEFA;
+  --color-panel: #FFFFFF;
+  --color-panel-2: #F4F8FD;
+  --color-texto: #0F172A;
+  --color-texto-suave: #334155;
+  --color-texto-tenue: #64748B;
+  --color-acento: #0284C7;
+  --color-acento-oscuro: #0369A1;
+  --color-secundario: #D97706;
+  --color-terciario: #059669;
+  --color-morado: #6366F1;
+  --color-borde: rgba(15,23,42,.12);
+  --color-borde-suave: rgba(15,23,42,.22);
+  --color-glass: rgba(255,255,255,.72);
+
+  --paper: var(--color-fondo);
+  --paper-2: var(--color-panel);
+  --ink: var(--color-texto);
+  --ink-soft: var(--color-texto-suave);
+  --ink-faint: var(--color-texto-tenue);
+  --terra: var(--color-acento);
+  --terra-deep: var(--color-acento-oscuro);
+  --blue: var(--color-secundario);
+  --line: var(--color-borde);
+  --line-strong: var(--color-borde-suave);
+  --grid-line: rgba(2,132,199,.06);
+  --scrim: rgba(2,8,23,.55);
+  --sobre-acento: #FFFFFF;
 }
 
 /* --- 2. Piezas que asumen "panel oscuro + texto claro" ------------------ */
@@ -2341,3 +2414,97 @@ body {
 .legal__section{ scroll-margin-top: calc(var(--topbar-h) + 20px); padding-top:.5rem; }
 .legal__section h2{ font-family:var(--font-display); font-size:clamp(1.5rem,1.2rem+2vw,2.2rem); color:var(--ink); margin:0 0 .8rem; padding-bottom:.5rem; border-bottom:2px solid var(--terra); }
 .legal__section h3{ font-family:var(--font-display); font-size:1.1rem; margin:1.4rem 0 .4rem; color:var(--terra-deep); }
+
+/* ==========================================================================
+   SOBRESCRITURAS — Paleta Azul Mediterráneo
+   ========================================================================== */
+
+/* Barra superior con glass */
+.topbar {
+  background: var(--color-glass);
+  border-bottom: 1px solid var(--color-borde);
+}
+.topbar__clock .dot {
+  background: var(--color-acento);
+  box-shadow: 0 0 0 3px var(--color-acento-suave);
+}
+
+/* Grano: casi invisible sobre fondo oscuro */
+.grain { opacity: .05; mix-blend-mode: overlay; }
+[data-theme="light"] .grain { opacity: .35; mix-blend-mode: multiply; }
+
+/* Acentos con fondo cian/oro => texto oscuro para contraste */
+.monograma__mark,
+.pill,
+.btn--solid {
+  background: var(--color-acento);
+  color: var(--sobre-acento);
+  border-color: var(--color-acento);
+}
+.btn--solid:hover {
+  background: var(--color-acento-oscuro);
+  border-color: var(--color-acento-oscuro);
+  color: var(--sobre-acento);
+}
+.badge {
+  background: var(--color-secundario);
+  color: var(--sobre-acento);
+}
+
+/* "Próximo paso": banda oscura elegante (no blanca) */
+.next {
+  background: var(--banda-oscura);
+  color: var(--color-texto);
+  border: 1px solid var(--color-borde);
+}
+.next__title { color: var(--color-texto); }
+.next__label { color: var(--color-acento); }
+.next__text { color: var(--color-texto-suave); }
+.next .btn--ghost {
+  color: var(--color-texto);
+  border-color: var(--color-borde-suave);
+}
+.next .btn--ghost:hover {
+  background: var(--color-acento);
+  color: var(--sobre-acento);
+  border-color: var(--color-acento);
+}
+
+/* Pie: banda oscura con borde superior */
+.footer {
+  background: var(--banda-oscura);
+  border-top: 1px solid var(--color-borde);
+}
+.footer__title { color: var(--color-texto); }
+.footer__key { color: var(--color-acento); }
+.footer__contacto a { color: var(--color-texto); }
+.footer__contacto a:hover { color: var(--color-acento); }
+
+/* Consola: negro azulado, texto cian/verde */
+.console {
+  background: var(--banda-oscura-2);
+  color: #B9E6FF;
+}
+.console code { color: #B9E6FF; }
+
+/* Widget valorar: banda oscura */
+.rev-rate {
+  background: var(--banda-oscura);
+  color: var(--color-texto);
+  border: 1px solid var(--color-borde);
+}
+.rev-rate__q { color: var(--color-texto); }
+
+/* Caption de la foto: texto claro sobre scrim oscuro */
+.hero__figure-caption { color: var(--color-texto); }
+
+/* Cerrar modal: botón visible */
+.cv-modal__close {
+  background: var(--color-panel-2);
+  color: var(--color-texto);
+  border: 1px solid var(--color-borde);
+}
+.cv-modal__close:hover {
+  background: var(--color-acento);
+  color: var(--sobre-acento);
+}

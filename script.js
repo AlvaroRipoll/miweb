@@ -236,16 +236,14 @@
 
     // Solo el color de marca (terracota), leído de la variable CSS
     function leerColor() {
-      colorMarca = (getComputedStyle(root).getPropertyValue('--terra') || '#B9502F').trim();
-    }
+      colorMarca = (getComputedStyle(root).getPropertyValue('--terra') || '#38BDF8').trim();    }
     function redimensionar() {
       W = canvas.width  = Math.floor(window.innerWidth  * dpr);
       H = canvas.height = Math.floor(window.innerHeight * dpr);
     }
     function crear(x, y) {
-          function crear(x, y) {
-      if (partes.length > 90) return;              // techo más alto: caben más a la vez
-      if (Math.random() < 0.35) return;            // se salta menos → nacen más
+      if (partes.length > 90) return;
+      if (Math.random() < 0.35) return;
       var ang = Math.random() * Math.PI * 2;
       var vel = Math.random() * 0.5 + 0.08;
       partes.push({
@@ -254,16 +252,6 @@
         vida: 1, decaer: Math.random() * 0.018 + 0.014,
         r: (Math.random() * 1.1 + 0.6) * dpr,
         c: colorMarca
-      });
-    }
-      var ang = Math.random() * Math.PI * 2;
-      var vel = Math.random() * 0.5 + 0.08;
-      partes.push({
-        x: x * dpr, y: y * dpr,
-        vx: Math.cos(ang) * vel, vy: Math.sin(ang) * vel - 0.04,
-        vida: 1, decaer: Math.random() * 0.018 + 0.014,
-        r: (Math.random() * 1.1 + 0.6) * dpr,      // radio más pequeño
-        c: colorMarca                              // siempre el mismo color
       });
     }
     function bucle() {
