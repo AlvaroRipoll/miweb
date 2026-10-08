@@ -2453,22 +2453,43 @@ body {
 
 /* "Próximo paso": banda oscura elegante (no blanca) */
 .next {
-  background: var(--banda-oscura);
-  color: var(--color-texto);
-  border: 1px solid var(--color-borde);
+  background: #0A1224;
+  color: #EAF1FB;
+  border: 1px solid rgba(148,163,184,.18);
 }
-.next__title { color: var(--color-texto); }
-.next__label { color: var(--color-acento); }
-.next__text { color: var(--color-texto-suave); }
+.next__title { color: #EAF1FB; }
+.next__title em { color: #38BDF8; }
+.next__label { color: #38BDF8; }
+.next__text { color: #9FB2CC; }
 .next .btn--ghost {
-  color: var(--color-texto);
-  border-color: var(--color-borde-suave);
+  color: #EAF1FB;
+  border-color: rgba(148,163,184,.30);
 }
 .next .btn--ghost:hover {
-  background: var(--color-acento);
-  color: var(--sobre-acento);
-  border-color: var(--color-acento);
+  background: #38BDF8;
+  color: #06101F;
+  border-color: #38BDF8;
 }
+/* bandas oscuras fijas: texto literal, independiente del tema */
+.footer { background: #0A1224; border-top: 1px solid rgba(148,163,184,.18); }
+.footer__title { color: #EAF1FB; }
+.footer__key { color: #38BDF8; }
+.footer__contacto a { color: #EAF1FB; }
+.footer__contacto a:hover { color: #38BDF8; }
+.footer__text,
+.footer__bottom { color: #9FB2CC; }
+.footer__bottom a { color: #CBD5E1; }
+.footer__bottom a:hover { color: #38BDF8; }
+
+.rev-rate { background: #0A1224; color: #EAF1FB; border: 1px solid rgba(148,163,184,.18); }
+.rev-rate__q { color: #EAF1FB; }
+.rev-star { color: rgba(234,241,251,.35); }
+.rev-star:hover, .rev-star.is-on { color: #38BDF8; }
+.rev-thanks { color: #38BDF8; }
+.rev-burst { background: #38BDF8; }
+
+.console { background: #060B16; color: #B9E6FF; }
+.console code { color: #B9E6FF; }
 
 /* Pie: banda oscura con borde superior */
 .footer {
@@ -2553,3 +2574,60 @@ body {
   /* con reduce-motion el muñeco sigue el scroll (es ligado al tuyo, no auto)
      pero no anima piernas: eso lo controla el JS con FORZAR */
 }
+/* ==========================================================================
+   BANDAS OSCURAS FIJAS (v2) — ganan con !important al tema, legibles en claro+oscuro
+   ========================================================================== */
+
+/* Próximo paso */
+.next {
+  background: #0A1224 !important;
+  color: #EAF1FB !important;
+  border: 1px solid rgba(148,163,184,.18) !important;
+}
+.next__label { color: #38BDF8 !important; }
+.next__title { color: #EAF1FB !important; }
+.next__title em { color: #38BDF8 !important; }
+.next__text { color: #9FB2CC !important; }
+.next .btn--ghost,
+.next a.btn--ghost {
+  color: #EAF1FB !important;
+  border-color: rgba(148,163,184,.40) !important;
+  background: transparent !important;
+}
+.next .btn--ghost:hover,
+.next a.btn--ghost:hover {
+  background: #38BDF8 !important;
+  color: #06101F !important;
+  border-color: #38BDF8 !important;
+}
+
+/* Pie */
+.footer {
+  background: #0A1224 !important;
+  color: #EAF1FB !important;
+  border-top: 1px solid rgba(148,163,184,.18) !important;
+}
+.footer__title { color: #EAF1FB !important; }
+.footer__key { color: #38BDF8 !important; }
+.footer__text { color: #9FB2CC !important; }
+.footer__contacto a { color: #EAF1FB !important; }
+.footer__contacto a:hover { color: #38BDF8 !important; }
+.footer__bottom { color: #9FB2CC !important; }
+.footer__bottom a { color: #CBD5E1 !important; }
+.footer__bottom a:hover { color: #38BDF8 !important; }
+
+/* Valorar (banda oscura) */
+.rev-rate {
+  background: #0A1224 !important;
+  color: #EAF1FB !important;
+  border: 1px solid rgba(148,163,184,.18) !important;
+}
+.rev-rate__q { color: #EAF1FB !important; }
+.rev-star { color: rgba(234,241,251,.35) !important; }
+.rev-star:hover, .rev-star.is-on { color: #38BDF8 !important; }
+.rev-thanks { color: #38BDF8 !important; }
+.rev-burst { background: #38BDF8 !important; }
+
+/* Consola (banda oscura) */
+.console { background: #060B16 !important; color: #B9E6FF !important; }
+.console code { color: #B9E6FF !important; }
