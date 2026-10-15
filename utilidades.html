@@ -6,10 +6,9 @@
   <title>Utilidades — Álvaro Ripoll Chaquet</title>
   <meta name="description" content="Utilidades de Álvaro Ripoll Chaquet: recortar fondo con IA, regex, minificador, conversores, visualizador de ordenación y más.">
   <meta name="author" content="Álvaro Ripoll Chaquet">
-  <meta name="theme-color" content="#F6F3EC">
-      <!-- Favicon + icono para iOS -->
-    <link rel="icon" href="img/logo.png" type="image/png">
-    <link rel="apple-touch-icon" href="img/logo.png">
+<meta name="theme-color" content="#0A0F1E">      <!-- Favicon + icono para iOS -->
+    <link rel="icon" href="img/logo.png?v=2" type="image/png">
+    <link rel="apple-touch-icon" href="img/logo.png?v=2">
 
     <!-- Open Graph: imagen y datos al compartir en WhatsApp/LinkedIn -->
     <meta property="og:type" content="website">
@@ -35,8 +34,7 @@
   <a class="skip-link" href="#contenido">Saltar al contenido</a>
 
   <header class="topbar" role="banner">
-    <a href="index.html" class="monograma" aria-label="Inicio — Álvaro Ripoll Chaquet"><span class="monograma__mark">AR</span><span class="monograma__text">Álvaro Ripoll</span></a>
-    <nav class="topnav" id="menu" aria-label="Navegación principal">
+<a href="index.html" class="monograma" aria-label="Inicio — Álvaro Ripoll Chaquet"><span class="monograma__logo"><img src="img/logo.png" alt="Logo Álvaro Ripoll"></span><span class="monograma__text">Álvaro Ripoll</span></a>    <nav class="topnav" id="menu" aria-label="Navegación principal">
       <ul>
         <li><a href="index.html#sobre-mi">Sobre mí</a></li>
         <li><a href="index.html#trayectoria">Lo que he hecho</a></li>
@@ -78,7 +76,6 @@
         <a class="u-card" href="#u-bases" data-reveal><span class="u-card__icon">01</span><span class="u-card__tag tag--math">Matemáticas</span><span class="u-card__title">Conversor de bases</span><span class="u-card__desc">Bin, oct, dec, hex con pasos.</span><span class="u-card__go" aria-hidden="true">→</span></a>
         <a class="u-card" href="#u-unidades" data-reveal><span class="u-card__icon">📏</span><span class="u-card__tag tag--net">Redes</span><span class="u-card__title">Conversor de unidades</span><span class="u-card__desc">Bytes, longitud, masa, tiempo, temperatura.</span><span class="u-card__go" aria-hidden="true">→</span></a>
         <a class="u-card" href="#u-orden" data-reveal><span class="u-card__icon">📊</span><span class="u-card__tag tag--visual">Visual</span><span class="u-card__title">Ordenación</span><span class="u-card__desc">Ves los algoritmos moverse en directo.</span><span class="u-card__go" aria-hidden="true">→</span></a>
-        <a class="u-card" href="#u-montecarlo" data-reveal><span class="u-card__icon">🎲</span><span class="u-card__tag tag--math">Matemáticas</span><span class="u-card__title">Monte Carlo π</span><span class="u-card__desc">Aproxima π lanzando puntos al azar.</span><span class="u-card__go" aria-hidden="true">→</span></a>
         <a class="u-card" href="#u-rle" data-reveal><span class="u-card__icon">🧩</span><span class="u-card__tag tag--math">Matemáticas</span><span class="u-card__title">Compresor RLE</span><span class="u-card__desc">Comprime y descomprime texto, con ratio.</span><span class="u-card__go" aria-hidden="true">→</span></a>
         <a class="u-card" href="#u-scratch" data-reveal><span class="u-card__icon">SCR</span><span class="u-card__tag tag--visual">Visual</span><span class="u-card__title">Scratch: Python / Java / C++</span><span class="u-card__desc">Aprende bucles, condicionales y variables con bloques.</span><span class="u-card__go" aria-hidden="true">-&gt;</span></a>
         <a class="u-card" href="#u-qr" data-reveal><span class="u-card__icon">[ ]</span><span class="u-card__tag tag--front">Front</span><span class="u-card__title">Generador QR</span><span class="u-card__desc">Convierte enlaces y texto en un codigo QR para descargar.</span><span class="u-card__go" aria-hidden="true">-&gt;</span></a>
@@ -181,13 +178,6 @@
       <div class="u-bar"><label class="u-sel"><select id="ordAlgo"><option value="bubble">Burbuja</option><option value="insertion">Inserción</option><option value="selection">Selección</option><option value="quick">Quick sort</option></select></label><button class="btn btn--solid" id="ordRun" type="button">Reproducir</button><button class="btn btn--ghost" id="ordShuffle" type="button">Mezclar</button><label class="u-len">Velocidad <input type="range" id="ordSpeed" min="1" max="60" value="30"></label></div>
       <div class="u-bars" id="ordBars" aria-live="polite"></div>
       <p class="u-status" id="ordStatus" role="status"></p>
-    </div></section>
-
-    <!-- ===== 12 · MONTE CARLO ===== -->
-    <section class="u-tool" id="u-montecarlo" aria-labelledby="mc-title"><div class="u-tool__inner">
-      <h2 id="mc-title" class="section-title"><em>🎲</em> Monte Carlo: π</h2>
-      <div class="u-bar"><button class="btn btn--solid" id="mcRun" type="button">Lanzar</button><button class="btn btn--ghost" id="mcPause" type="button">Pausar</button><button class="btn btn--ghost" id="mcReset" type="button">Reset</button><p class="u-status" id="mcStatus" role="status">0 puntos · π ≈ —</p></div>
-      <div class="u-mc__wrap"><canvas id="mcCanvas" width="360" height="360" aria-label="Simulación Monte Carlo"></canvas><dl class="u-mc__stats"><div><dt>Puntos</dt><dd id="mcN">0</dd></div><div><dt>Dentro</dt><dd id="mcD">0</dd></div><div><dt>π aprox.</dt><dd id="mcPi">—</dd></div><div><dt>Error</dt><dd id="mcErr">—</dd></div></dl></div>
     </div></section>
 
     <!-- ===== 13 · RLE ===== -->

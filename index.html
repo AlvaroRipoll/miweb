@@ -13,10 +13,10 @@
     <meta name="author" content="Álvaro Ripoll Chaquet">
 
     <!-- Paleta básica antes de que cargue la hoja de estilos (evita flash) -->
-    <meta name="theme-color" content="#F6F3EC">
+    <meta name="theme-color" content="#0A0F1E">
     <!-- Favicon + icono para iOS -->
-    <link rel="icon" href="img/logo.png" type="image/png">
-    <link rel="apple-touch-icon" href="img/logo.png">
+    <link rel="icon" href="img/logo.png?v=2" type="image/png">
+    <link rel="apple-touch-icon" href="img/logo.png?v=2">
 
     <!-- Open Graph: imagen y datos al compartir en WhatsApp/LinkedIn -->
     <meta property="og:type" content="website">
@@ -380,7 +380,7 @@
                     </div>
                     <span class="tl-item__dot tl-item__dot--live" aria-hidden="true"></span>
                 </li>
-                                <!-- MUÑECO RECORREDOR (pixel). El JS lo mueve por los 4 dots. -->
+                <!-- MUÑECO RECORREDOR (pixel). El JS lo mueve por los 4 dots. -->
                 <li class="tl-runner" aria-hidden="true"></li>
             </ol>
             </ol>
@@ -499,7 +499,20 @@
                     </div>
                 </article>
             </div>
-
+            <!-- ===== EN VIVO (datos de APIs externas, sin clave) ===== -->
+            <div class="envivo" data-reveal>
+                <h3 class="envivo__title">En vivo</h3>
+                <p class="envivo__frase">Monté esto porque no quería una web que solo dijera lo que escribí un martes.
+                    Quería que respirara: con cosas que están pasando ahora, en sitios que me importan. Mis repos de
+                    GitHub, porque es lo que estoy aprendiendo a hacer y suben solos conforme commiteo. El Atleti,
+                    porque no hay fin de semana sin partido y eso también es parte de mí. El cripto, porque en EDEM me
+                    picó el gusanillo del dato y del mercado, y aquí lo veo moverse.</p>
+                <div class="envivo__grid">
+                    <div class="envivo__card" id="w-github">Cargando GitHub…</div>
+                    <div class="envivo__card" id="w-cripto">Cargando cripto…</div>
+                    <div class="envivo__card" id="w-futbol">Cargando Atleti…</div>
+                </div>
+            </div>
             <!-- Fila de intereses sueltos -->
             <p class="likes__also" data-reveal>
                 <span class="likes__also-label">Y también</span>
@@ -604,7 +617,20 @@
                 <li><a href="legal.html#condiciones">Condiciones de uso</a></li>
                 <li><a href="legal.html#cookies">Politica de cookies</a></li>
             </ul>
+            <div class="envivo__footer">
+                <span id="f-tiempo">Cargando tiempo…</span>
+                <span class="envivo__sep" aria-hidden="true">·</span>
+                <span id="f-reloj">--:--:--</span>
+                <select id="f-zona" aria-label="Zona horaria">
+                    <option value="Europe/Madrid" selected>Madrid</option>
+                    <option value="Asia/Tokyo">Tokio</option>
+                    <option value="America/New_York">Nueva York</option>
+                    <option value="Europe/London">Londres</option>
+                    <option value="America/Buenos_Aires">Buenos Aires</option>
+                </select>
+            </div>
         </div>
+
     </footer>
 
     <!-- Modal del curriculum (se abre con el boton "Contacto") -->
@@ -622,6 +648,7 @@
     <script src="resenas.js?v=3" defer></script>
     <script src="footer.js" defer></script>
     <script src="muñeco.js?v=1"></script>
+    <script src="api.js?v=1"></script>
 </body>
 
 </html>

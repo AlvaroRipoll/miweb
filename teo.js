@@ -216,7 +216,7 @@
         panel.classList.add("is-open");
         if (!yaAvisado) {
             yaAvisado = true;
-            try { fetch("https://ntfy.sh/" + TOPIC, { method: "POST", mode: "no-cors", body: "Alguien abri&oacute; el chat de tu web" }); } catch (e) { }
+            try { fetch("https://ntfy.sh/" + TOPIC, { method: "POST", mode: "no-cors", body: "Alguien ha abierto el chat de tu web" }); } catch (e) { }
         }
         if (log.children.length === 0) ir("start");
         inp.focus();
