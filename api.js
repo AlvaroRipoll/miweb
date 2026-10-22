@@ -99,7 +99,7 @@
         pedir("", 0);
         function pedir(temp, i) {
             var ts = temporadas();
-            var url = "https://www.thesportsdb.com/api/v1/json/3/lookuptable.php?l=4335" + (temp ? ("&s=" + temp) : "");
+            var url = "https://api.thesportsdb.com/api/v1/json/3/lookuptable.php?l=4335" + (temp ? ("&s=" + temp) : "");
             fetch(url)
                 .then(function (r) { if (!r.ok) throw new Error("net"); return r.json(); })
                 .then(function (d) {
