@@ -1,8 +1,7 @@
 /* api.js - panel "En vivo" + tiempo y reloj del footer.
    4 fuentes externas sin clave, cada una con su try/catch y error amable.
    NO usa claves. NO toca otros ficheros. Todo en un solo fichero.
-   VERSION 2: cripto con reintento y hueco nunca vacio; futbol sin tildes y con
-   respaldo de temporada. */
+   VERSION 3: futbol via proxy CORS (TheSportsDB no abre CORS desde navegador). */
 (function () {
     /* ---- config: segundos de recarga (0 = no recarga) ---- */
     var RELOAD_GITHUB = 0;    // GitHub: limite 60/h por IP, no recargamos para no saturar
@@ -16,7 +15,8 @@
         ".envivo__title{font-family:var(--font-display);font-size:clamp(1.6rem,1.2rem+2vw,2.2rem);color:var(--color-texto);margin:0 0 .6rem}" +
         ".envivo__frase{color:var(--color-texto-suave);max-width:62ch;margin:0 0 1.6rem;line-height:1.6}" +
         ".envivo__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}" +
-".envivo__card{background:var(--color-panel);border:1px solid var(--color-borde);border-radius:14px;padding:1.2rem;min-height:120px;color:var(--color-texto);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:.5rem;justify-content:center}" +        ".envivo__card h4{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--color-texto-tenue);margin:0}" +
+        ".envivo__card{background:var(--color-panel);border:1px solid var(--color-borde);border-radius:14px;padding:1.2rem;min-height:120px;color:var(--color-texto);box-shadow:var(--shadow-sm);display:flex;flex-direction:column;gap:.5rem;justify-content:center}" +
+        ".envivo__card h4{font-family:var(--font-mono);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--color-texto-tenue);margin:0}" +
         ".envivo__big{font-family:var(--font-display);font-weight:800;font-size:1.8rem;line-height:1;color:var(--color-texto)}" +
         ".envivo__row{display:flex;justify-content:space-between;gap:.6rem;font-size:.85rem;color:var(--color-texto-suave)}" +
         ".envivo__up{color:var(--color-terciario)} .envivo__down{color:var(--color-peligro)}" +
@@ -34,10 +34,27 @@
     function esc(s) { return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
     function hueco(id, html) { var e = el(id); if (e) e.innerHTML = html; }
     function err(id, msg) { var e = el(id); if (e) e.innerHTML = '<h4>' + (e.getAttribute("data-tit") || "") + '</h4><p class="envivo__err">' + msg + '</p>'; }
-    // quita tildes para que "Atletico" matchee a "Atletico" con o sin tilde
     function sinTildes(s) { return String(s).normalize("NFD").replace(/[\u0300-\u036f]/g, ""); }
 
-    /* ---- 1. GitHub (perfil publico, sin clave) ---- */
+    /* ---- CAMBIO: proxy CORS. TheSportsDB no devuelve Access-Control-Allow-Origin,
+       asi que el navegador bloquea el fetch directo y PINTA ROJO EN CONSOLA aunque
+       tu .catch() lo capture (el rojo lo escribe el navegador, no tu JS).
+       Solucion: NO llamar a thesportsdb directo; llamar a un proxy publico que si
+       abre CORS y reenvia. El navegador solo ve allorigins -> no bloquea -> 0 rojos.
+       El resto de APIs (GitHub, CoinGecko, Open-Meteo) si abren CORS: van directas. ---- */
+    function conProxy(url) {
+        if (url.indexOf("thesportsdb.com") !== -1) {
+            // Si allorigins te diera problemas, cambia por:
+            // "https://corsproxy.io/?url=" + encodeURIComponent(url)
+            return "https://api.allorigins.win/raw?url=" + encodeURIComponent(url);
+        }
+        return url;
+    }
+
+    /* ---- 1. GitHub (perfil publico, sin clave) ----
+       NOTA DEFENSA: el 403 es el limite de 60 peticiones/h por IP de GitHub sin
+       clave, no un bug. En casa/otra red funciona. Para 0 rojos aqui se cachea en
+       localStorage; lo dejo sin cachar a proposito (el limite es del servicio). ---- */
     function github() {
         var box = el("w-github"); if (!box) return;
         box.setAttribute("data-tit", "GitHub");
@@ -76,7 +93,7 @@
                     var ch = (m.eur_24h_change != null ? m.eur_24h_change : 0); var cls = ch >= 0 ? "envivo__up" : "envivo__down"; var fle = ch >= 0 ? "&#9650;" : "&#9660;";
                     return '<div class="envivo__row"><span>' + p[1] + '</span><span><b>' + Math.round(m.eur).toLocaleString("es-ES") + ' &euro;</b> <span class="' + cls + '">' + fle + ' ' + Math.abs(ch).toFixed(1) + '%</span></span></div>';
                 }).join("");
-                if (!filas) { // CoinGecko devolvio 200 pero vacio (ratia): reintento unico y luego amable
+                if (!filas) {
                     if (n === 0) { setTimeout(function () { cripto(1); }, 6000); return; }
                     throw new Error("vacio");
                 }
@@ -85,8 +102,7 @@
             .catch(function () { err("w-cripto", "CoinGecko no responde ahora."); });
     }
 
-    /* ---- 3. Futbol (TheSportsDB, La Liga id 4335, clave publica 3). ----
-       Sin tildes en el filtro + respaldo de temporada si la actual viene vacia. ---- */
+    /* ---- 3. Futbol (TheSportsDB + proxy CORS). Sin tildes + respaldo de temporada. ---- */
     function temporadas() {
         var y = new Date().getFullYear(); var m = new Date().getMonth() + 1;
         var cur = (m >= 8) ? (y + "-" + (y + 1)) : ((y - 1) + "-" + y);
@@ -100,8 +116,12 @@
         function pedir(temp, i) {
             var ts = temporadas();
             var url = "https://api.thesportsdb.com/api/v1/json/3/lookuptable.php?l=4335" + (temp ? ("&s=" + temp) : "");
-            fetch(url)
-                .then(function (r) { if (!r.ok) throw new Error("net"); return r.json(); })
+            /* CAMBIO: fetch por conProxy + timeout. Si el proxy se cuelga, corto y
+               caigo al amable sin rojo. El navegador nunca ve la URL de thesportsdb. */
+            var ctrl = new AbortController();
+            var tm = setTimeout(function () { ctrl.abort(); }, 13000);
+            fetch(conProxy(url), { signal: ctrl.signal })
+                .then(function (r) { clearTimeout(tm); if (!r.ok) throw new Error("net"); return r.json(); })
                 .then(function (d) {
                     var t = d && d.table;
                     if (!t || !t.length) {
@@ -111,6 +131,7 @@
                     pintaTabla(t);
                 })
                 .catch(function () {
+                    clearTimeout(tm);
                     if (i < ts.length) { pedir(ts[i], i + 1); }
                     else { err("w-futbol", "No encuentro la clasificaci&oacute;n ahora mismo."); }
                 });
@@ -121,9 +142,7 @@
             var at = idx >= 0 ? t[idx] : null;
             var html = '<h4>Atleti</h4>';
             if (!at) { box.innerHTML = html + '<div class="envivo__err">No veo al Atleti en la tabla.</div>'; return; }
-            // linea grande: puesto + puntos
             html += '<div class="envivo__big">' + (at.intRank || "?") + '&ordm; <span style="font-size:1rem;font-weight:400;color:var(--color-texto-suave)">' + (at.intPoints || 0) + ' pts</span></div>';
-            // contexto: el de arriba, el Atleti y el de abajo (rellena a 3 si falta)
             var filaIdx = [];
             if (idx - 1 >= 0) filaIdx.push(idx - 1);
             filaIdx.push(idx);
